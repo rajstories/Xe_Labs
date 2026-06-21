@@ -36,12 +36,12 @@ export function ContactSection() {
               <input 
                 type="text" 
                 placeholder="NAME" 
-                className="border-b border-gray-800 bg-transparent outline-none py-4 w-full text-white placeholder-gray-600 focus:border-white transition-colors uppercase tracking-widest text-xs" 
+                className="border-b border-gray-800 bg-transparent outline-none py-4 w-full text-white placeholder-gray-600 focus:border-white transition-colors tracking-wide text-sm" 
               />
               <input 
                 type="text" 
                 placeholder="COMPANY" 
-                className="border-b border-gray-800 bg-transparent outline-none py-4 w-full text-white placeholder-gray-600 focus:border-white transition-colors uppercase tracking-widest text-xs" 
+                className="border-b border-gray-800 bg-transparent outline-none py-4 w-full text-white placeholder-gray-600 focus:border-white transition-colors tracking-wide text-sm" 
               />
             </div>
             
@@ -49,25 +49,25 @@ export function ContactSection() {
               <input 
                 type="email" 
                 placeholder="EMAIL" 
-                className="border-b border-gray-800 bg-transparent outline-none py-4 w-full text-white placeholder-gray-600 focus:border-white transition-colors uppercase tracking-widest text-xs" 
+                className="border-b border-gray-800 bg-transparent outline-none py-4 w-full text-white placeholder-gray-600 focus:border-white transition-colors tracking-wide text-sm" 
               />
               <input 
                 type="text" 
                 placeholder="PROJECT TYPE" 
-                className="border-b border-gray-800 bg-transparent outline-none py-4 w-full text-white placeholder-gray-600 focus:border-white transition-colors uppercase tracking-widest text-xs" 
+                className="border-b border-gray-800 bg-transparent outline-none py-4 w-full text-white placeholder-gray-600 focus:border-white transition-colors tracking-wide text-sm" 
               />
             </div>
             
             <input 
               type="text" 
               placeholder="BUDGET RANGE" 
-              className="border-b border-gray-800 bg-transparent outline-none py-4 w-full text-white placeholder-gray-600 focus:border-white transition-colors uppercase tracking-widest text-xs" 
+              className="border-b border-gray-800 bg-transparent outline-none py-4 w-full text-white placeholder-gray-600 focus:border-white transition-colors tracking-wide text-sm" 
             />
             
             <textarea 
               placeholder="MESSAGE" 
               rows={4} 
-              className="border-b border-gray-800 bg-transparent outline-none py-4 w-full text-white placeholder-gray-600 focus:border-white transition-colors uppercase tracking-widest text-xs resize-none"
+              className="border-b border-gray-800 bg-transparent outline-none py-4 w-full text-white placeholder-gray-600 focus:border-white transition-colors tracking-wide text-sm resize-none"
             ></textarea>
             
             <div className="mt-8 flex justify-start">
