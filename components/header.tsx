@@ -38,7 +38,7 @@ export function Header() {
             </g>
           </svg>
         </Link>
-        <nav className="hidden sm:flex items-center gap-8 pt-6">
+        <nav className="hidden sm:flex items-center gap-8 pt-2">
           <Link href="#work" className="text-xs uppercase tracking-[0.2em] text-gray-400 hover:text-white transition-colors">
             Solutions
           </Link>

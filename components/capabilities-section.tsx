@@ -14,25 +14,25 @@ const IsometricCube = ({
   delay: number;
   glow?: boolean;
 }) => {
-  // Isometric projection paths for a cube
-  const top = "M0,10 L17.32,0 L34.64,10 L17.32,20 Z";
-  const left = "M0,10 L17.32,20 L17.32,40 L0,30 Z";
-  const right = "M34.64,10 L34.64,30 L17.32,40 L17.32,20 Z";
+  // Isometric projection paths for a cube (scaled up slightly for the cluster)
+  const top = "M0,15 L25.98,0 L51.96,15 L25.98,30 Z";
+  const left = "M0,15 L25.98,30 L25.98,60 L0,45 Z";
+  const right = "M51.96,15 L51.96,45 L25.98,60 L25.98,30 Z";
 
   return (
     <motion.g
       transform={`translate(${x}, ${y})`}
-      animate={{ y: [0, -10, 0] }}
+      animate={{ y: [0, -12, 0] }}
       transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay }}
     >
       <motion.path
         d={top}
-        fill={glow ? "#936DE3" : "#F4F1FA"}
-        animate={glow ? { fill: ["#F4F1FA", "#936DE3", "#F4F1FA"] } : {}}
+        fill={glow ? "#A883F8" : "#F4F1FA"}
+        animate={glow ? { fill: ["#F4F1FA", "#FFFFFF", "#A883F8", "#F4F1FA"] } : {}}
         transition={
           glow
             ? {
-                duration: 4,
+                duration: 3,
                 repeat: Infinity,
                 ease: "easeInOut",
                 delay: delay + 1,
@@ -40,29 +40,59 @@ const IsometricCube = ({
             : {}
         }
       />
-      <path d={left} fill={glow ? "#7543C9" : "#E5DDF5"} />
-      <path d={right} fill={glow ? "#5D2BB8" : "#D4C7EC"} />
+      <path d={left} fill={glow ? "#8A5AD4" : "#E5DDF5"} />
+      <path d={right} fill={glow ? "#723BB8" : "#D4C7EC"} />
     </motion.g>
   );
 };
 
-const IsometricDataCore = () => (
-  <svg
-    viewBox="0 0 200 150"
-    className="w-full h-full opacity-90"
-    preserveAspectRatio="xMidYMid meet"
-  >
-    <g transform="translate(65, 35)">
-      <IsometricCube x={34.64} y={-20} delay={0.2} />
-      <IsometricCube x={0} y={0} delay={0.4} glow />
-      <IsometricCube x={69.28} y={0} delay={0.6} />
-      <IsometricCube x={34.64} y={20} delay={0.8} />
-      <IsometricCube x={34.64} y={-60} delay={1.0} />
-      <IsometricCube x={-34.64} y={-20} delay={0.5} />
-      <IsometricCube x={-34.64} y={20} delay={0.7} />
-    </g>
-  </svg>
-);
+const IsometricDataCore = () => {
+  const cubes = [];
+  // Build a 3x3 base grid
+  for (let i = 0; i < 3; i++) {
+    for (let j = 0; j < 3; j++) {
+      cubes.push({ i, j, k: 0 });
+    }
+  }
+  // Add some stacked height variations
+  cubes.push({ i: 1, j: 1, k: 1 });
+  cubes.push({ i: 1, j: 1, k: 2 });
+  cubes.push({ i: 0, j: 1, k: 1 });
+  cubes.push({ i: 1, j: 0, k: 1 });
+
+  // Randomly select glowing nodes based on position
+  const isGlow = (c: any) =>
+    (c.i === 1 && c.j === 1 && c.k === 2) ||
+    (c.i === 2 && c.j === 0 && c.k === 0) ||
+    (c.i === 0 && c.j === 2 && c.k === 0);
+
+  return (
+    <svg
+      viewBox="0 0 300 300"
+      className="absolute inset-0 w-full h-full opacity-90"
+      preserveAspectRatio="xMidYMid meet"
+    >
+      <g transform="translate(150, 100)">
+        {cubes
+          .sort((a, b) => a.i + a.j - (b.i + b.j) || a.k - b.k)
+          .map((c, idx) => {
+            const x = (c.i - c.j) * 25.98;
+            const y = (c.i + c.j) * 15 - c.k * 30; // 30 is cube height step
+            const delay = (c.i + c.j) * 0.3 + c.k * 0.2;
+            return (
+              <IsometricCube
+                key={idx}
+                x={x}
+                y={y}
+                delay={delay}
+                glow={isGlow(c)}
+              />
+            );
+          })}
+      </g>
+    </svg>
+  );
+};
 
 const CodeMorph = () => (
   <svg
@@ -75,29 +105,50 @@ const CodeMorph = () => (
         <feGaussianBlur stdDeviation="3" result="blur" />
         <feComposite in="SourceGraphic" in2="blur" operator="over" />
       </filter>
+      <linearGradient id="codeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#28DCE6" />
+        <stop offset="100%" stopColor="#31E885" />
+      </linearGradient>
     </defs>
-    <g filter="url(#neonGlowCode)">
-      {[0, 1, 2, 3, 4, 5].map((i) => (
-        <motion.rect
-          key={i}
-          x="30"
-          y={35 + i * 16}
-          height="6"
-          rx="3"
-          fill="#28DCE6"
-          opacity={0.8}
-          initial={{ width: 40 + i * 10 }}
-          animate={{
-            width: [40 + i * 10, 120 - i * 15, 60 + i * 20, 40 + i * 10],
-            x: [40, 40 + (i % 2) * 20, 40],
-          }}
-          transition={{
-            duration: 3 + i * 0.5,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-      ))}
+    
+    <g transform="translate(40, 20)">
+      {/* Code Editor Window */}
+      <rect x="-10" y="-10" width="140" height="110" rx="6" fill="#111" stroke="#333" strokeWidth="2" />
+      <circle cx="0" cy="0" r="2.5" fill="#FF5F56" />
+      <circle cx="10" cy="0" r="2.5" fill="#FFBD2E" />
+      <circle cx="20" cy="0" r="2.5" fill="#27C93F" />
+      <path d="M-10,10 L130,10" stroke="#333" strokeWidth="1" />
+      
+      <g filter="url(#neonGlowCode)">
+        {[
+          { y: 25, w: 60, d: 2 },
+          { y: 40, w: 90, d: 2.5 },
+          { y: 55, w: 40, d: 3 },
+          { y: 70, w: 80, d: 2.2 },
+          { y: 85, w: 50, d: 2.8 }
+        ].map((line, i) => (
+          <motion.rect
+            key={i}
+            x="0"
+            y={line.y}
+            height="4"
+            rx="2"
+            fill="url(#codeGrad)"
+            opacity={0.8}
+            initial={{ width: 0 }}
+            animate={{
+              width: [0, line.w, line.w - 10, line.w],
+              opacity: [0.4, 0.9, 0.6, 0.9],
+            }}
+            transition={{
+              duration: line.d,
+              repeat: Infinity,
+              repeatType: "reverse",
+              ease: "easeInOut",
+            }}
+          />
+        ))}
+      </g>
     </g>
   </svg>
 );
@@ -197,54 +248,76 @@ const OrbitingSwarm = () => (
 const InteractiveDataWaterfall = () => {
   return (
     <svg
-      viewBox="0 0 400 150"
-      className="w-full h-full"
-      preserveAspectRatio="xMidYMid meet"
+      viewBox="0 0 400 300"
+      className="absolute inset-0 w-full h-full"
+      preserveAspectRatio="none"
     >
-      {[80, 140, 200, 260, 320].map((x, i) => (
-        <g key={i}>
-          {/* Column line */}
-          <line
-            x1={x}
-            y1="0"
-            x2={x}
-            y2="150"
-            stroke="#D6D3CF"
-            strokeWidth="2"
-            strokeDasharray="8 8"
-          />
+      <defs>
+        <filter id="neonGlowScan" x="-20%" y="-500%" width="140%" height="1000%">
+          <feGaussianBlur stdDeviation="3" result="blur" />
+          <feComposite in="SourceGraphic" in2="blur" operator="over" />
+        </filter>
+      </defs>
 
-          {/* Droplet */}
-          <motion.circle
-            cx={x}
-            r="6"
+      {/* 8 Vertical Tracks */}
+      {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => {
+        const x = 25 + i * 50;
+        return (
+          <g key={`track-${i}`}>
+            <line
+              x1={x}
+              y1="0"
+              x2={x}
+              y2="100%"
+              stroke="#D6D3CF"
+              strokeWidth="2"
+              strokeDasharray="6 10"
+              opacity="0.4"
+            />
+          </g>
+        );
+      })}
+
+      {/* Data Capsules */}
+      {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => {
+        const x = 25 + i * 50;
+        return (
+          <motion.rect
+            key={`capsule-${i}`}
+            x={x - 4}
+            y="-40"
+            width="8"
+            height="32"
+            rx="4"
             fill={i % 2 === 0 ? "#20A2FF" : "#28DCE6"}
-            initial={{ cy: -10, opacity: 0 }}
-            variants={{
-              idle: {
-                cy: [-10, 160],
-                opacity: [0, 1, 1, 0],
-                transition: {
-                  duration: 3 + (i % 3) * 0.5,
-                  repeat: Infinity,
-                  ease: "linear",
-                  delay: i * 0.4,
-                },
-              },
-              hover: {
-                cy: [-10, 160],
-                opacity: [0, 1, 1, 0],
-                transition: {
-                  duration: (3 + (i % 3) * 0.5) / 2,
-                  repeat: Infinity,
-                  ease: "linear",
-                  delay: i * 0.2,
-                },
-              },
+            animate={{
+              y: [-40, 340],
+            }}
+            transition={{
+              duration: 2.5 + (i % 3) * 1.5,
+              repeat: Infinity,
+              ease: "linear",
+              delay: i * 0.6,
             }}
           />
-        </g>
-      ))}
+        );
+      })}
+
+      {/* Scanning Laser Line */}
+      <motion.rect
+        x="0"
+        y="0"
+        width="100%"
+        height="2"
+        fill="#28DCE6"
+        filter="url(#neonGlowScan)"
+        animate={{ y: [0, 300, 0] }}
+        transition={{
+          duration: 5,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
     </svg>
   );
 };
@@ -271,64 +344,41 @@ export function CapabilitiesSection() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-[400px_400px] gap-4 md:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 md:auto-rows-[400px] gap-4 md:gap-6">
           {/* Card 1: Custom LLM Systems (Wide) */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="md:col-span-2 md:row-span-1 bg-[#E8E4F8] text-black rounded-[2rem] flex flex-col md:flex-row hover:scale-[1.01] transform transition-transform duration-300 overflow-hidden relative"
+            className="md:col-span-2 bg-[#E8E4F8] text-black rounded-[2rem] grid grid-cols-1 md:grid-cols-2 overflow-hidden relative group min-h-[400px]"
           >
-            <div className="p-8 md:p-12 flex flex-col justify-end w-full md:w-1/2 z-10 order-2 md:order-1 h-full min-h-[200px]">
-              <h3 className="text-2xl md:text-3xl font-display font-bold uppercase tracking-tight leading-none text-black mb-4">
+            <div className="p-10 relative z-10 flex flex-col justify-center gap-4">
+              <h3 className="text-2xl md:text-3xl font-display font-bold uppercase tracking-tight leading-none text-black mt-2">
                 Custom LLM Systems
               </h3>
-              <p className="text-sm md:text-base text-gray-800 font-light tracking-wide">
+              <p className="text-sm md:text-base text-gray-800 font-light tracking-wide max-w-sm">
                 LLM-powered systems that understand business data, documents,
                 processes and customer interactions.
               </p>
             </div>
-            <div className="w-full md:w-1/2 h-48 md:h-full relative flex items-center justify-center pt-8 md:pt-0 order-1 md:order-2">
-              <IsometricDataCore />
+            <div className="relative h-full min-h-[300px] overflow-hidden">
+              <div className="absolute inset-0 w-full h-full opacity-90 transition-transform duration-500 group-hover:scale-[1.05]">
+                <IsometricDataCore />
+              </div>
             </div>
           </motion.div>
 
-          {/* Card 2: AI-Driven Software (Tall) */}
+          {/* Card 2: Automation Agents (Standard) */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-            className="md:col-span-1 md:row-span-2 bg-[#0A0A0A] text-white p-8 md:p-10 rounded-[2rem] flex flex-col hover:scale-[1.01] transform transition-transform duration-300 overflow-hidden relative min-h-[400px]"
+            className="md:col-span-1 bg-[#FFE4D6] text-black p-8 md:p-10 rounded-[2rem] flex flex-col justify-between overflow-hidden relative group min-h-[400px]"
           >
-            <div className="flex-1 w-full relative flex items-center justify-center mb-8 h-48 md:h-auto">
-              <CodeMorph />
-            </div>
-            <div className="z-10 mt-auto">
-              <h3 className="text-xl md:text-2xl font-display font-bold uppercase tracking-tight leading-tight text-white mb-3">
-                AI-Driven Software
-              </h3>
-              <p className="text-sm text-gray-400 font-light tracking-wide">
-                Software where AI is built into the core of the product
-                experience.
-              </p>
-            </div>
-          </motion.div>
-
-          {/* Card 3: Automation Agents (Standard) */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-            className="md:col-span-1 md:row-span-1 bg-[#FFE4D6] text-black p-8 md:p-10 rounded-[2rem] flex flex-col justify-between hover:scale-[1.01] transform transition-transform duration-300 overflow-hidden relative min-h-[400px]"
-          >
-            <div className="flex-1 relative flex items-center justify-center mb-8">
-              <OrbitingSwarm />
-            </div>
-            <div className="z-10">
-              <h3 className="text-xl md:text-2xl font-display font-bold uppercase tracking-tight leading-tight text-black mb-3">
+            <div className="relative z-10 flex flex-col justify-start gap-4 mb-4">
+              <h3 className="text-xl md:text-2xl font-display font-bold uppercase tracking-tight leading-tight text-black mt-2">
                 Automation Agents
               </h3>
               <p className="text-sm text-gray-800 font-light tracking-wide">
@@ -336,28 +386,55 @@ export function CapabilitiesSection() {
                 tools, and reduce manual effort.
               </p>
             </div>
+            <div className="flex-1 w-full relative flex items-center justify-center opacity-90 transition-transform duration-500 group-hover:scale-[1.05]">
+              <OrbitingSwarm />
+            </div>
           </motion.div>
 
-          {/* Card 4: Intelligent Workflows (Standard) */}
+          {/* Card 3: AI-Driven Software (Standard) */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+            className="md:col-span-1 bg-[#0A0A0A] text-white p-8 md:p-10 rounded-[2rem] flex flex-col justify-between overflow-hidden relative group min-h-[400px]"
+          >
+            <div className="relative z-10 flex flex-col justify-start gap-4 mb-4">
+              <h3 className="text-xl md:text-2xl font-display font-bold uppercase tracking-tight leading-tight text-white mt-2">
+                AI-Driven Software
+              </h3>
+              <p className="text-sm text-gray-400 font-light tracking-wide">
+                Software where AI is built into the core of the product
+                experience.
+              </p>
+            </div>
+            <div className="flex-1 w-full relative flex items-center justify-center transition-transform duration-500 group-hover:scale-[1.05]">
+              <CodeMorph />
+            </div>
+          </motion.div>
+
+          {/* Card 4: Intelligent Workflows (Wide) */}
           <motion.div
             initial="idle"
             whileHover="hover"
             animate="idle"
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
-            className="md:col-span-1 md:row-span-1 bg-[#F4F1ED] text-black p-8 md:p-10 rounded-[2rem] flex flex-col justify-between hover:scale-[1.01] transform transition-transform duration-300 overflow-hidden relative min-h-[400px]"
+            className="md:col-span-2 bg-[#F4F1ED] text-black rounded-[2rem] grid grid-cols-1 md:grid-cols-2 overflow-hidden relative group min-h-[400px]"
           >
-            <div className="flex-1 relative flex items-center justify-center mb-8">
-              <InteractiveDataWaterfall />
-            </div>
-            <div className="z-10">
-              <h3 className="text-xl md:text-2xl font-display font-bold uppercase tracking-tight leading-tight text-black mb-3">
+            <div className="p-10 relative z-10 flex flex-col justify-center gap-4">
+              <h3 className="text-xl md:text-2xl font-display font-bold uppercase tracking-tight leading-tight text-black mt-2">
                 Intelligent Workflows
               </h3>
-              <p className="text-sm text-gray-800 font-light tracking-wide">
+              <p className="text-sm text-gray-800 font-light tracking-wide max-w-sm">
                 End-to-end workflows that connect people, data, tools and AI
                 into one structured system.
               </p>
+            </div>
+            <div className="relative h-full min-h-[300px] overflow-hidden">
+              <div className="absolute inset-0 w-full h-full opacity-90 transition-transform duration-500 group-hover:scale-[1.05]">
+                <InteractiveDataWaterfall />
+              </div>
             </div>
           </motion.div>
         </div>
