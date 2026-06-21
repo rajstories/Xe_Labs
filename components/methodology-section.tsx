@@ -48,46 +48,64 @@ export function MethodologySection() {
   return (
     <>
       {/* Section 1: The Manifesto */}
-      <section className="w-full bg-[#F8F9FA] pt-32 pb-32 px-6 md:px-12 flex flex-col items-center justify-center relative overflow-hidden">
-        <div className="max-w-[1600px] mx-auto text-center flex flex-col items-center w-full">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <h2 className="text-gray-400 tracking-[0.3em] font-semibold uppercase text-xs md:text-sm mb-8">
-              Our Philosophy
-            </h2>
-          </motion.div>
+      <section className="w-full bg-[#F8F9FA] pt-20 pb-32 px-6 md:px-12 relative overflow-hidden">
+        <div className="max-w-7xl mx-auto w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+            {/* Left Column (The Anchor) */}
+            <div className="lg:col-span-4 flex flex-col">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <div className="w-16 h-1 bg-black mb-6"></div>
+                <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-black uppercase">
+                  Our Philosophy
+                </h2>
+              </motion.div>
+            </div>
 
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-            className="text-5xl md:text-6xl lg:text-7xl font-display font-bold uppercase tracking-tight leading-[0.95] text-center w-full max-w-5xl mx-auto mb-12 md:mb-16"
-          >
-            <span className="text-black block">We don&apos;t just</span>
-            <span className="text-black block">use AI tools.</span>
-            <span className="text-[#20A2FF] block mt-2 md:mt-4 drop-shadow-md">We build AI systems.</span>
-          </motion.h2>
+            {/* Right Column (The Manifesto) */}
+            <div className="lg:col-span-8 flex flex-col">
+              <motion.h2
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{
+                  duration: 0.8,
+                  ease: [0.16, 1, 0.3, 1],
+                  delay: 0.1,
+                }}
+                className="text-5xl md:text-6xl lg:text-7xl lg:text-[5rem] font-display font-bold uppercase tracking-tight leading-[0.9] text-left w-full"
+              >
+                <span className="text-black block">
+                  We don&apos;t just
+                  <br />
+                  use AI tools.
+                </span>
+                <span className="text-[#20A2FF] block mt-2 md:mt-4 drop-shadow-md">
+                  We build AI systems.
+                </span>
+              </motion.h2>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-            className="text-gray-600 text-lg md:text-xl font-light max-w-3xl mx-auto leading-relaxed tracking-wide sm:text-center mt-4 md:mt-8"
-          >
-            Most businesses are trying to add AI on top of old workflows. XE
-            Labs builds AI-native systems from the ground up. We combine product
-            strategy, software development, automation logic and LLM engineering
-            to create systems that fit real business operations. Our focus is
-            not just on building something impressive. Our focus is on building
-            technology that works in the real world, improves execution and
-            creates measurable business value.
-          </motion.p>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+                className="text-gray-600 text-lg md:text-xl font-light max-w-3xl leading-relaxed tracking-wide text-left mt-10"
+              >
+                Most businesses are trying to add AI on top of old workflows. XE
+                Labs builds AI-native systems from the ground up. We combine
+                product strategy, software development, automation logic and LLM
+                engineering to create systems that fit real business operations.
+                Our focus is not just on building something impressive. Our
+                focus is on building technology that works in the real world,
+                improves execution and creates measurable business value.
+              </motion.p>
+            </div>
+          </div>
         </div>
       </section>
 
