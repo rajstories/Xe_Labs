@@ -39,13 +39,13 @@ export function Header() {
           </svg>
         </Link>
         <nav className="hidden sm:flex items-center gap-8 pt-2">
-          <Link href="#work" className="text-xs uppercase tracking-[0.2em] text-gray-400 hover:text-white transition-colors">
+          <Link href="#work" className="text-sm font-medium text-white/80 hover:text-white transition-colors">
             Solutions
           </Link>
-          <Link href="#work" className="text-xs uppercase tracking-[0.2em] text-gray-400 hover:text-white transition-colors">
+          <Link href="#work" className="text-sm font-medium text-white/80 hover:text-white transition-colors">
             Work
           </Link>
-          <Link href="#contact" className="text-xs uppercase tracking-[0.2em] text-gray-400 hover:text-white transition-colors">
+          <Link href="#contact" className="text-sm font-medium text-white/80 hover:text-white transition-colors">
             Contact
           </Link>
         </nav>

@@ -80,9 +80,9 @@ export function HeroSection() {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="w-full"
         >
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5rem] font-sans font-bold tracking-tighter leading-[0.95] text-white uppercase">
-            <span className="block whitespace-nowrap">BUILDING AI NATIVE</span>
-            <span className="block text-[#F4C744]">SYSTEMS</span>
+          <h1 className="font-sans font-bold tracking-[-0.04em] leading-[1.05] [text-shadow:0_4px_12px_rgba(0,0,0,0.5)]">
+            <span className="block text-5xl sm:text-6xl md:text-[72px] text-[#f9f9ff]">Engineer Your</span>
+            <span className="block text-5xl sm:text-6xl md:text-[72px] text-[#fabd00]">AI-Native Future.</span>
           </h1>
         </motion.div>
 
@@ -91,26 +91,24 @@ export function HeroSection() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
-          className="mt-8 text-lg md:text-xl text-gray-300 max-w-2xl font-light leading-relaxed mx-auto"
+          className="mt-8 text-base md:text-lg text-[#e0e0e0] font-normal max-w-[560px] mx-auto leading-[1.5] text-center [text-shadow:0_2px_10px_rgba(0,0,0,0.5)]"
         >
-          Custom LLMs, automation agents, and intelligent workflows for modern
-          business.
+          We engineer custom LLMs, autonomous agents, and intelligent workflows. Transform your private data into scalable operational power.
         </motion.p>
 
-        {/* Call to Action */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.4 }}
-        >
-          <Link
-            href="#contact"
-            className="inline-flex items-center justify-center mt-16 bg-gradient-to-r from-[#ffffff] to-[#d2cae6] border border-[#85769c] text-black px-6 py-4 font-bold transition-all hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(210,202,230,0.4)] uppercase tracking-[0.2em] text-xs rounded-full"
-          >
-            Build With Us
-          </Link>
-        </motion.div>
       </div>
+
+      {/* Call to Action */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.4 }}
+        className="absolute bottom-12 md:bottom-16 left-1/2 -translate-x-1/2 z-20"
+      >
+        <Link href="#contact" className="fluid-glass-button">
+          <span className="glass-text">Build With Us</span>
+        </Link>
+      </motion.div>
     </section>
   );
 }
