@@ -326,7 +326,7 @@ export function CapabilitiesSection() {
   return (
     <section
       className="w-full bg-[#F8F9FA] px-6 md:px-12 py-24 md:py-32"
-      id="work"
+      id="solutions"
     >
       <div className="max-w-7xl mx-auto">
         <motion.div

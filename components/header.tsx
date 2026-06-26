@@ -1,6 +1,15 @@
+"use client";
+
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 export function Header() {
+  const pathname = usePathname();
+
+  if (pathname === '/careers') {
+    return null;
+  }
+
   return (
     <header className="absolute top-0 left-0 right-0 z-50 w-full px-6 md:px-12 py-8 bg-transparent">
       <div className="max-w-[1600px] mx-auto flex items-start justify-between mt-2">
@@ -39,7 +48,7 @@ export function Header() {
           </svg>
         </Link>
         <nav className="hidden sm:flex items-center gap-8 pt-2">
-          <Link href="/#work" className="text-sm font-medium text-white/80 hover:text-white transition-colors">
+          <Link href="/#solutions" className="text-sm font-medium text-white/80 hover:text-white transition-colors">
             Solutions
           </Link>
           <Link href="/#work" className="text-sm font-medium text-white/80 hover:text-white transition-colors">

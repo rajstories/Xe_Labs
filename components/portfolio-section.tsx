@@ -48,7 +48,7 @@ const portfolioItems = [
 
 export function PortfolioSection() {
   return (
-    <section className="w-full bg-black text-white py-32 px-6 md:px-12">
+    <section id="work" className="w-full bg-black text-white py-32 px-6 md:px-12">
       <div className="max-w-[1600px] mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
