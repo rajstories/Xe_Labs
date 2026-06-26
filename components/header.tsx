@@ -2,9 +2,32 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useEffect } from 'react';
 
 export function Header() {
   const pathname = usePathname();
+
+  useEffect(() => {
+    if (pathname === '/careers') return;
+
+    let lastScrollY = window.scrollY;
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      const scrollingUp = currentScrollY < lastScrollY;
+      lastScrollY = currentScrollY;
+
+      if (currentScrollY < 50 && scrollingUp && window.location.hash) {
+        window.history.replaceState(
+          null,
+          document.title,
+          window.location.pathname + window.location.search
+        );
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [pathname]);
 
   if (pathname === '/careers') {
     return null;
