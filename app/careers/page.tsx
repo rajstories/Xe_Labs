@@ -21,7 +21,8 @@ import {
   Video,
   Mic,
   Briefcase,
-  Lightbulb
+  Lightbulb,
+  Code
 } from "lucide-react";
 
 function FaqItem({ question, answer }: { question: string, answer: React.ReactNode }) {
