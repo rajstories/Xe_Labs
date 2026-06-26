@@ -8,7 +8,7 @@ export function Header() {
   const pathname = usePathname();
 
   useEffect(() => {
-    if (pathname === '/careers') return;
+    if (pathname?.startsWith('/careers')) return;
 
     let lastScrollY = window.scrollY;
     const handleScroll = () => {
@@ -29,7 +29,7 @@ export function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [pathname]);
 
-  if (pathname === '/careers') {
+  if (pathname?.startsWith('/careers')) {
     return null;
   }
 
