@@ -105,7 +105,7 @@ export default function CareersPage() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="mt-12 flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto"
           >
-            <Link href="#apply" className="w-full sm:w-auto px-8 py-4 rounded-lg bg-[#fabd00] hover:bg-[#fabd00]/90 text-black font-semibold transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
+            <Link href="/careers/apply" className="w-full sm:w-auto px-8 py-4 rounded-lg bg-[#fabd00] hover:bg-[#fabd00]/90 text-black font-semibold transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
               Apply for Build Sprint 2026 <ArrowRight className="w-4 h-4" />
             </Link>
             <Link href="#tracks" className="w-full sm:w-auto px-8 py-4 rounded-lg border border-white/20 bg-white/5 hover:bg-white/10 text-white font-semibold transition-all duration-300 backdrop-blur-sm flex items-center justify-center">
@@ -512,7 +512,7 @@ export default function CareersPage() {
             </p>
             
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link href="#apply" className="w-full sm:w-auto px-8 py-4 rounded-lg bg-[#fabd00] hover:bg-[#fabd00]/90 text-black font-bold text-lg transition-all duration-300 shadow-[0_0_40px_rgba(250,189,0,0.3)] hover:shadow-[0_0_60px_rgba(250,189,0,0.5)]">
+              <Link href="/careers/apply" className="w-full sm:w-auto px-8 py-4 rounded-lg bg-[#fabd00] hover:bg-[#fabd00]/90 text-black font-bold text-lg transition-all duration-300 shadow-[0_0_40px_rgba(250,189,0,0.3)] hover:shadow-[0_0_60px_rgba(250,189,0,0.5)]">
                 Apply Now
               </Link>
               <Link href="#brief" className="w-full sm:w-auto px-8 py-4 rounded-lg border border-white/20 bg-white/5 hover:bg-white/10 text-white font-semibold text-lg transition-all duration-300 backdrop-blur-sm">
