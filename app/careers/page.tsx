@@ -114,7 +114,7 @@ export default function CareersPage() {
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             >
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/5 text-[11px] md:text-xs font-semibold text-white/80 mb-6 tracking-widest uppercase">
-                XE Labs Build Sprint 2026
+                XE Build Sprint <span className="text-[#fabd00]">&middot;</span> Hackathon Edition 01
               </div>
               
               <h1 className="font-bold tracking-tight leading-[1.05] text-[2.5rem] sm:text-5xl lg:text-[4.5rem] xl:text-[5rem] mb-4">
