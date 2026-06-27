@@ -139,50 +139,118 @@ export function TrackPageLayout({ data }: { data: TrackData }) {
         </section>
 
         {/* 4. What You Need To Build */}
-        <section>
-          <div className="flex items-center gap-3 mb-8">
-            <ListTodo className="w-8 h-8 text-[#fabd00]" />
-            <h2 className="text-3xl md:text-4xl font-bold text-white">What You Need To Build</h2>
+        <section className="flex flex-col gap-10">
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center gap-4">
+              <div className="p-3 rounded-2xl bg-[#fabd00]/10 border border-[#fabd00]/20 flex items-center justify-center">
+                <ListTodo className="w-7 h-7 text-[#fabd00]" />
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-white relative">
+                What You Need To Build
+                {/* Subtle yellow accent underline */}
+                <div className="absolute -bottom-2 left-0 w-1/3 h-1 bg-gradient-to-r from-[#fabd00]/80 to-transparent rounded-full shadow-[0_0_12px_rgba(250,189,0,0.5)]" />
+              </h2>
+            </div>
+            <p className="text-lg text-white/60 max-w-2xl mt-3 leading-relaxed">
+              Start with the core requirements, then layer advanced features and bonus innovations to stand out.
+            </p>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="p-6 rounded-2xl border border-green-500/20 bg-green-500/5">
-              <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                <CheckCircle2 className="w-5 h-5 text-green-400" /> Must-Have
-              </h3>
-              <ul className="space-y-3">
-                {data.mustHaveFeatures.map((feat, i) => (
-                  <li key={i} className="text-sm text-white/70 leading-relaxed pl-4 border-l-2 border-green-500/30">
-                    {feat}
-                  </li>
-                ))}
-              </ul>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Must-Have Card */}
+            <div className="group flex flex-col h-full p-8 rounded-[24px] border border-white/5 bg-white/[0.02] backdrop-blur-md shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] hover:border-green-500/30 hover:-translate-y-1 transition-all duration-300 relative overflow-hidden">
+              <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-green-500/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+              
+              <div className="relative z-10 flex flex-col h-full">
+                <div className="mb-8">
+                  <div className="inline-flex items-center px-3 py-1.5 rounded-lg bg-green-500/10 border border-green-500/20 text-[10px] font-bold text-green-400 uppercase tracking-widest mb-5">
+                    Core Requirements
+                  </div>
+                  <h3 className="text-2xl font-bold text-white mb-2">
+                    Must-Have
+                  </h3>
+                  <p className="text-sm text-white/50 leading-relaxed">Minimum features required for a valid submission.</p>
+                </div>
+                
+                <ul className="space-y-1 mb-8 flex-grow">
+                  {data.mustHaveFeatures.map((feat, i) => (
+                    <li key={i} className="flex items-start gap-3 p-2.5 -mx-2.5 rounded-xl hover:bg-white/[0.04] transition-colors group/row">
+                      <CheckCircle2 className="w-5 h-5 text-green-500/40 group-hover/row:text-green-400 transition-colors flex-shrink-0 mt-0.5" />
+                      <span className="text-sm text-white/70 leading-relaxed">{feat}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="mt-auto pt-5 border-t border-white/5 text-center bg-white/[0.01] -mx-8 -mb-8 p-6 rounded-b-[24px]">
+                  <span className="text-[11px] font-semibold text-white/40 uppercase tracking-widest">
+                    Required for qualification
+                  </span>
+                </div>
+              </div>
             </div>
             
-            <div className="p-6 rounded-2xl border border-blue-500/20 bg-blue-500/5">
-              <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                <Layers className="w-5 h-5 text-blue-400" /> Should-Have
-              </h3>
-              <ul className="space-y-3">
-                {data.shouldHaveFeatures.map((feat, i) => (
-                  <li key={i} className="text-sm text-white/70 leading-relaxed pl-4 border-l-2 border-blue-500/30">
-                    {feat}
-                  </li>
-                ))}
-              </ul>
+            {/* Should-Have Card */}
+            <div className="group flex flex-col h-full p-8 rounded-[24px] border border-white/5 bg-white/[0.02] backdrop-blur-md shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] hover:border-blue-500/30 hover:-translate-y-1 transition-all duration-300 relative overflow-hidden">
+              <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-blue-500/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+              
+              <div className="relative z-10 flex flex-col h-full">
+                <div className="mb-8">
+                  <div className="inline-flex items-center px-3 py-1.5 rounded-lg bg-blue-500/10 border border-blue-500/20 text-[10px] font-bold text-blue-400 uppercase tracking-widest mb-5">
+                    Advanced Expectations
+                  </div>
+                  <h3 className="text-2xl font-bold text-white mb-2">
+                    Should-Have
+                  </h3>
+                  <p className="text-sm text-white/50 leading-relaxed">Features that make the prototype stronger.</p>
+                </div>
+                
+                <ul className="space-y-1 mb-8 flex-grow">
+                  {data.shouldHaveFeatures.map((feat, i) => (
+                    <li key={i} className="flex items-start gap-3 p-2.5 -mx-2.5 rounded-xl hover:bg-white/[0.04] transition-colors group/row">
+                      <Layers className="w-5 h-5 text-blue-500/40 group-hover/row:text-blue-400 transition-colors flex-shrink-0 mt-0.5" />
+                      <span className="text-sm text-white/70 leading-relaxed">{feat}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="mt-auto pt-5 border-t border-white/5 text-center bg-white/[0.01] -mx-8 -mb-8 p-6 rounded-b-[24px]">
+                  <span className="text-[11px] font-semibold text-white/40 uppercase tracking-widest">
+                    Improves judging score
+                  </span>
+                </div>
+              </div>
             </div>
             
-            <div className="p-6 rounded-2xl border border-purple-500/20 bg-purple-500/5">
-              <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                <Star className="w-5 h-5 text-purple-400" /> Bonus
-              </h3>
-              <ul className="space-y-3">
-                {data.bonusFeatures.map((feat, i) => (
-                  <li key={i} className="text-sm text-white/70 leading-relaxed pl-4 border-l-2 border-purple-500/30">
-                    {feat}
-                  </li>
-                ))}
-              </ul>
+            {/* Bonus Card */}
+            <div className="group flex flex-col h-full p-8 rounded-[24px] border border-white/5 bg-white/[0.02] backdrop-blur-md shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] hover:border-purple-500/30 hover:-translate-y-1 transition-all duration-300 relative overflow-hidden">
+              <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-purple-500/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+              
+              <div className="relative z-10 flex flex-col h-full">
+                <div className="mb-8">
+                  <div className="inline-flex items-center px-3 py-1.5 rounded-lg bg-purple-500/10 border border-purple-500/20 text-[10px] font-bold text-purple-400 uppercase tracking-widest mb-5">
+                    Extra Credit
+                  </div>
+                  <h3 className="text-2xl font-bold text-white mb-2">
+                    Bonus
+                  </h3>
+                  <p className="text-sm text-white/50 leading-relaxed">High-impact additions for standout teams.</p>
+                </div>
+                
+                <ul className="space-y-1 mb-8 flex-grow">
+                  {data.bonusFeatures.map((feat, i) => (
+                    <li key={i} className="flex items-start gap-3 p-2.5 -mx-2.5 rounded-xl hover:bg-white/[0.04] transition-colors group/row">
+                      <Star className="w-5 h-5 text-purple-500/40 group-hover/row:text-purple-400 transition-colors flex-shrink-0 mt-0.5" />
+                      <span className="text-sm text-white/70 leading-relaxed">{feat}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="mt-auto pt-5 border-t border-white/5 text-center bg-white/[0.01] -mx-8 -mb-8 p-6 rounded-b-[24px]">
+                  <span className="text-[11px] font-semibold text-white/40 uppercase tracking-widest">
+                    Helps you stand out
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
         </section>
