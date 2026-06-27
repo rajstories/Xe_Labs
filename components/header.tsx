@@ -62,9 +62,9 @@ export function Header() {
 
   return (
     <>
-      <header className="absolute top-0 left-0 right-0 z-50 w-full px-6 md:px-12 py-8 bg-transparent">
+      <header className="absolute top-0 left-0 right-0 z-[100] w-full px-6 md:px-12 py-8 bg-transparent">
         <div className="max-w-[1600px] mx-auto flex items-center justify-between mt-2">
-          <Link href="/" className="flex items-center group relative z-[60]">
+          <Link href="/" className="flex items-center group relative z-[60]" onClick={() => setIsMobileMenuOpen(false)}>
             <svg viewBox="0 0 160 110" className="w-[70px] h-auto md:w-[90px] transition-transform duration-300 group-hover:scale-105" fill="none" xmlns="http://www.w3.org/2000/svg">
               <defs>
                 <filter id="neonGlowLogo" x="-50%" y="-50%" width="200%" height="200%">
@@ -127,8 +127,15 @@ export function Header() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-50 bg-black/95 backdrop-blur-lg flex flex-col items-center justify-center sm:hidden"
+            className="fixed inset-0 z-[90] bg-black/98 backdrop-blur-lg flex flex-col items-center justify-center sm:hidden"
           >
+            <button 
+              className="absolute top-10 right-6 text-white p-2 z-[100]"
+              onClick={() => setIsMobileMenuOpen(false)}
+              aria-label="Close Menu"
+            >
+              <X size={32} />
+            </button>
             <nav className="flex flex-col items-center gap-8">
               {navLinks.map((link, index) => (
                 <motion.div
