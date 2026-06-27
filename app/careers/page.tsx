@@ -227,7 +227,7 @@ export default function CareersPage() {
                 </li>
               ))}
             </ul>
-            <Link href="#tracks" className="inline-flex items-center justify-center w-full py-3 rounded-lg bg-white/10 hover:bg-white/20 text-white text-sm font-medium transition-colors">
+            <Link href="/build-sprint/influenceos" className="inline-flex items-center justify-center w-full py-3 rounded-lg bg-white/10 hover:bg-white/20 text-white text-sm font-medium transition-colors">
               Explore Track
             </Link>
           </motion.div>
@@ -256,7 +256,7 @@ export default function CareersPage() {
                 </li>
               ))}
             </ul>
-            <Link href="#tracks" className="inline-flex items-center justify-center w-full py-3 rounded-lg bg-white/10 hover:bg-white/20 text-white text-sm font-medium transition-colors">
+            <Link href="/build-sprint/editdna" className="inline-flex items-center justify-center w-full py-3 rounded-lg bg-white/10 hover:bg-white/20 text-white text-sm font-medium transition-colors">
               Explore Track
             </Link>
           </motion.div>
@@ -285,7 +285,7 @@ export default function CareersPage() {
                 </li>
               ))}
             </ul>
-            <Link href="#tracks" className="inline-flex items-center justify-center w-full py-3 rounded-lg bg-white/10 hover:bg-white/20 text-white text-sm font-medium transition-colors">
+            <Link href="/build-sprint/voicecore" className="inline-flex items-center justify-center w-full py-3 rounded-lg bg-white/10 hover:bg-white/20 text-white text-sm font-medium transition-colors">
               Explore Track
             </Link>
           </motion.div>
