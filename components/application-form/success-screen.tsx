@@ -28,9 +28,7 @@ export function SuccessScreen() {
       </h1>
       
       <p className="text-lg text-white/70 mb-10 leading-relaxed">
-        Thank you for applying to the XE Labs Build Sprint 2026. 
-        Your application has been securely stored. Our team will review your details 
-        and you will hear from us soon via email.
+        Application submitted successfully. Shortlisted applicants will be contacted via email or WhatsApp.
       </p>
 
       <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">

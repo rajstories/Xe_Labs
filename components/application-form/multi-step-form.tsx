@@ -121,10 +121,38 @@ const TOTAL_STEPS = 7;
 export function MultiStepForm() {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState<FormData>(initialFormData);
-  const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
+  const [errors, setErrors] = useState<Partial<Record<keyof FormData | 'turnstile', string>>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+
+  React.useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const existingScript = document.getElementById('cf-turnstile-script');
+    if (!existingScript) {
+      const script = document.createElement('script');
+      script.id = 'cf-turnstile-script';
+      script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
+      script.async = true;
+      script.defer = true;
+      document.body.appendChild(script);
+    }
+
+    (window as any).onTurnstileSuccess = (token: string) => {
+      setTurnstileToken(token);
+      setErrors((prev) => {
+        const next = { ...prev };
+        delete next.turnstile;
+        return next;
+      });
+    };
+
+    return () => {
+      delete (window as any).onTurnstileSuccess;
+    };
+  }, []);
 
   const updateFormData = (fields: Partial<FormData>) => {
     setFormData((prev) => ({ ...prev, ...fields }));
@@ -137,7 +165,7 @@ export function MultiStepForm() {
   };
 
   const validateStep = (currentStep: number): boolean => {
-    const newErrors: Partial<Record<keyof FormData, string>> = {};
+    const newErrors: Partial<Record<keyof FormData | 'turnstile', string>> = {};
     let isValid = true;
 
     if (currentStep === 1) {
@@ -150,7 +178,13 @@ export function MultiStepForm() {
       if (!formData.lastName) { newErrors.lastName = 'Last name is required.'; isValid = false; }
       if (!formData.email || !/^\S+@\S+\.\S+$/.test(formData.email)) { newErrors.email = 'Valid email is required.'; isValid = false; }
       if (!formData.college) { newErrors.college = 'College/University is required.'; isValid = false; }
-      if (!formData.graduationYear) { newErrors.graduationYear = 'Graduation year is required.'; isValid = false; }
+      if (!formData.graduationYear) {
+        newErrors.graduationYear = 'Graduation year is required.';
+        isValid = false;
+      } else if (formData.graduationYear !== '2027' && formData.graduationYear !== '2028') {
+        newErrors.graduationYear = 'Only graduation years 2027 and 2028 are eligible.';
+        isValid = false;
+      }
       if (!formData.github) { newErrors.github = 'GitHub profile URL is required.'; isValid = false; }
     } else if (currentStep === 3) {
       if (!formData.techStack) { newErrors.techStack = 'Please list your main tech stack.'; isValid = false; }
@@ -173,6 +207,10 @@ export function MultiStepForm() {
     } else if (currentStep === 7) {
       if (!formData.consentRules) { newErrors.consentRules = 'You must agree to the rules.'; isValid = false; }
       if (!formData.consentData) { newErrors.consentData = 'You must agree to the data policy.'; isValid = false; }
+      if (!turnstileToken) {
+        newErrors.turnstile = 'Spam protection check is required.';
+        isValid = false;
+      }
     }
 
     setErrors(newErrors);
@@ -265,6 +303,7 @@ export function MultiStepForm() {
         resumeData: resumeBase64,
         pitchDeckName: formData.pitchDeck ? formData.pitchDeck.name : null,
         pitchDeckData: pitchDeckBase64,
+        turnstileToken: turnstileToken
       };
 
       // Set team details if type is Team, otherwise nullify/omit them
@@ -300,16 +339,11 @@ export function MultiStepForm() {
         payload.member3Github = null;
       }
 
-      const scriptUrl = process.env.NEXT_PUBLIC_HACKATHON_SCRIPT_URL;
-      if (!scriptUrl) {
-        throw new Error('Google Apps Script Web App URL is not defined in environment variables.');
-      }
-
-      // POST to script web app URL (must use text/plain to avoid pre-flight CORS blocks with Google Script redirects)
-      const response = await fetch(scriptUrl, {
+      // Secure backend endpoint call
+      const response = await fetch('/api/hackathon-apply', {
         method: 'POST',
         headers: {
-          'Content-Type': 'text/plain;charset=utf-8',
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(payload),
       });
@@ -318,12 +352,15 @@ export function MultiStepForm() {
 
       if (result.status === 'success') {
         setIsSuccess(true);
+        // Clear sensitive state on success
+        setFormData(initialFormData);
+        setTurnstileToken(null);
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
-        throw new Error(result.message || 'Submission failed. Please try again.');
+        throw new Error(result.message || 'Unable to submit application right now. Please try again.');
       }
     } catch (err: any) {
-      setSubmitError(err.message || 'Failed to submit application. Network error or script failure.');
+      setSubmitError(err.message || 'Unable to submit application right now. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -373,7 +410,15 @@ export function MultiStepForm() {
               {step === 4 && formData.applicationType === 'Team' && <Step4 formData={formData} updateFormData={updateFormData} errors={errors} />}
               {step === 5 && <Step5 formData={formData} updateFormData={updateFormData} errors={errors} />}
               {step === 6 && <Step6 formData={formData} updateFormData={updateFormData} errors={errors} />}
-              {step === 7 && <Step7 formData={formData} updateFormData={updateFormData} errors={errors} />}
+              {step === 7 && (
+                <Step7 
+                  formData={formData} 
+                  updateFormData={updateFormData} 
+                  errors={errors} 
+                  turnstileToken={turnstileToken} 
+                  setTurnstileToken={setTurnstileToken} 
+                />
+              )}
             </motion.div>
           </AnimatePresence>
         </div>
@@ -698,7 +743,21 @@ function Step6({ formData, updateFormData, errors }: any) {
   );
 }
 
-function Step7({ formData, updateFormData, errors }: any) {
+function Step7({ formData, updateFormData, errors, turnstileToken, setTurnstileToken }: any) {
+  React.useEffect(() => {
+    if (typeof window !== 'undefined' && (window as any).turnstile) {
+      try {
+        (window as any).turnstile.render('#turnstile-container', {
+          sitekey: process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '1x00000000000000000000AA',
+          callback: 'onTurnstileSuccess',
+          theme: 'dark'
+        });
+      } catch (e) {
+        // Suppress already-rendered errors
+      }
+    }
+  }, [turnstileToken]);
+
   return (
     <div className="space-y-8">
       <div>
@@ -728,6 +787,24 @@ function Step7({ formData, updateFormData, errors }: any) {
             </span>
           }
         />
+      </div>
+
+      {/* Cloudflare Turnstile Widget */}
+      <div className="flex flex-col gap-3 mt-6 items-start">
+        <label className="text-sm font-medium text-white/90">Spam Protection Verification</label>
+        <div 
+          id="turnstile-container"
+          className="cf-turnstile" 
+          data-sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '1x00000000000000000000AA'}
+          data-callback="onTurnstileSuccess"
+          data-theme="dark"
+        ></div>
+        {errors.turnstile && <span className="text-red-400 text-xs mt-1">{errors.turnstile}</span>}
+      </div>
+
+      {/* Privacy Note */}
+      <div className="text-xs text-white/50 bg-white/5 p-4 rounded-xl border border-white/5 leading-relaxed mt-6">
+        Your application data is used only for XE Labs Build Sprint 2026 evaluation and internship consideration. We do not sell applicant data. Access is restricted to the organizing team.
       </div>
 
       <div className="bg-[#fabd00]/10 border border-[#fabd00]/30 rounded-xl p-4 text-sm text-[#fabd00] mt-4">
