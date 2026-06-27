@@ -1,10 +1,18 @@
 import React from 'react';
 import { TrackPageLayout, TrackData } from '@/components/track-page-layout';
+import { JsonLd } from '@/components/json-ld';
+import { SITE_URL, breadcrumbSchema, createMetadata, faqSchema, webPageSchema } from '@/lib/seo';
 
-export const metadata = {
-  title: 'InfluenceOS Track - Build Sprint 2026 | XE Labs',
-  description: 'Creator Discovery & Campaign Intelligence Platform track details.',
-};
+const title = 'InfluenceOS Track | Creator Discovery & Campaign Intelligence';
+const description = 'Build InfluenceOS, a creator discovery and campaign intelligence platform for Instagram and YouTube influencer marketing. Create dashboards, tracking links, creator scoring, and AI campaign insights.';
+
+export const metadata = createMetadata({
+  title,
+  description,
+  path: '/build-sprint/influenceos',
+  image: '/build-sprint/influenceos/opengraph-image',
+  keywords: ['InfluenceOS', 'creator discovery platform', 'influencer marketing dashboard', 'influencer campaign analytics'],
+});
 
 const trackData: TrackData = {
   trackName: "InfluenceOS",
@@ -72,9 +80,34 @@ const trackData: TrackData = {
     { category: "Analytics", tech: "Chart.js / Recharts" },
     { category: "Optional API", tech: "YouTube Data API" }
   ],
-  complianceNote: "Students must not scrape private Instagram data, bypass login, collect private phone numbers, spam creators, or violate platform rules. Dummy/simulated data is allowed if clearly marked."
+  complianceNote: "Students must not scrape private Instagram data, bypass login, collect private phone numbers, spam creators, or violate platform rules. Dummy/simulated data is allowed if clearly marked.",
+  faqs: [
+    {
+      question: 'What is InfluenceOS?',
+      answer: 'InfluenceOS is an XE Labs Build Sprint 2026 challenge track for a creator discovery and campaign intelligence platform. The prototype should help a brand find Instagram or YouTube creators, compare profiles, create a campaign, generate creator-specific tracking links, and understand simulated performance through clear analytics and AI-assisted insights.',
+    },
+    {
+      question: 'What should teams build in InfluenceOS?',
+      answer: 'Teams should build a working brand dashboard with a searchable creator dataset, useful filters, profile comparison, a campaign creation flow, unique tracking links, and a performance dashboard. The required prototype can use clearly labelled simulated data; judges care about product clarity, credible metrics, usable workflows, and responsible data practices.',
+    },
+    {
+      question: 'Does InfluenceOS require private social-platform data?',
+      answer: 'No. Teams must not bypass logins, scrape private Instagram data, collect private contact details, or violate platform rules. Public, licensed, API-provided, or clearly simulated creator data is acceptable. Every submission should explain its data source, known limitations, and which metrics are real versus generated for demonstration.',
+    },
+  ],
 };
 
 export default function InfluenceOSPage() {
-  return <TrackPageLayout data={trackData} />;
+  const path = '/build-sprint/influenceos';
+  return (
+    <>
+      <JsonLd data={[
+        webPageSchema({ path, name: title, description }),
+        breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'XE Labs Build Sprint 2026', path: '/careers' }, { name: 'InfluenceOS', path }]),
+        faqSchema(trackData.faqs),
+        { '@context': 'https://schema.org', '@type': 'TechArticle', headline: title, description, url: `${SITE_URL}${path}`, about: 'Creator discovery and influencer campaign intelligence hackathon challenge', author: { '@id': `${SITE_URL}/#organization` }, isPartOf: { '@id': `${SITE_URL}/careers#event` } },
+      ]} />
+      <TrackPageLayout data={trackData} />
+    </>
+  );
 }

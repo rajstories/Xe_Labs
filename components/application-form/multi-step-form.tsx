@@ -57,6 +57,7 @@ export interface FormData {
   // Consent
   consentRules: boolean;
   consentData: boolean;
+  consentTeam: boolean;
 }
 
 const initialFormData: FormData = {
@@ -99,6 +100,7 @@ const initialFormData: FormData = {
 
   consentRules: false,
   consentData: false,
+  consentTeam: false,
 };
 
 const toBase64 = (file: File): Promise<string> =>
@@ -205,8 +207,14 @@ export function MultiStepForm() {
       if (!formData.resume) { newErrors.resume = 'Resume is required.'; isValid = false; }
       if (!formData.availability) { newErrors.availability = 'Please select your availability.'; isValid = false; }
     } else if (currentStep === 7) {
-      if (!formData.consentRules) { newErrors.consentRules = 'You must agree to the rules.'; isValid = false; }
-      if (!formData.consentData) { newErrors.consentData = 'You must agree to the data policy.'; isValid = false; }
+      if (!formData.consentData) {
+        newErrors.consentData = 'You must agree to the data collection terms';
+        isValid = false;
+      }
+      if (formData.applicationType === 'Team' && !formData.consentTeam) {
+        newErrors.consentTeam = 'You must confirm team consent';
+        isValid = false;
+      }
       if (!turnstileToken) {
         newErrors.turnstile = 'Spam protection check is required.';
         isValid = false;
@@ -556,12 +564,8 @@ function Step2({ formData, updateFormData, errors }: any) {
           onChange={(e) => updateFormData({ graduationYear: e.target.value })}
           error={errors.graduationYear}
           options={[
-            { value: '2024', label: '2024' },
-            { value: '2025', label: '2025' },
-            { value: '2026', label: '2026' },
             { value: '2027', label: '2027' },
             { value: '2028', label: '2028' },
-            { value: 'Graduated', label: 'Already Graduated' },
           ]}
         />
       </div>
@@ -620,7 +624,7 @@ function Step4({ formData, updateFormData, errors }: any) {
     <div className="space-y-8">
       <div>
         <h2 className="text-2xl font-bold text-white mb-2">Team Details</h2>
-        <p className="text-white/60 text-sm">Since you selected Team application, provide your teammates' details.</p>
+        <p className="text-white/60 text-sm">Since you selected Team application, provide your teammates&apos; details.</p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -767,26 +771,20 @@ function Step7({ formData, updateFormData, errors, turnstileToken, setTurnstileT
 
       <div className="p-6 rounded-xl border border-white/10 bg-white/5 space-y-6">
         <FormCheckbox
-          checked={formData.consentRules}
-          onChange={(e) => updateFormData({ consentRules: e.target.checked })}
-          error={errors.consentRules}
-          label={
-            <span>
-              I have read and agree to the <a href="#" className="text-[#fabd00] hover:underline">Build Sprint Rules & Guidelines</a>, and I confirm that all code submitted will be original or properly attributed open-source work.
-            </span>
-          }
-        />
-        
-        <FormCheckbox
           checked={formData.consentData}
           onChange={(e) => updateFormData({ consentData: e.target.checked })}
           error={errors.consentData}
-          label={
-            <span>
-              I agree to allow <strong>LXDIA AI Pvt. Ltd. (XE Labs)</strong> to store and process my application data for the purposes of this event and potential future recruitment opportunities.
-            </span>
-          }
+          label="I agree that XE Labs may collect and process my application data for Build Sprint 2026 evaluation, communication, and internship consideration."
         />
+
+        {formData.applicationType === 'Team' && (
+          <FormCheckbox
+            checked={formData.consentTeam}
+            onChange={(e) => updateFormData({ consentTeam: e.target.checked })}
+            error={errors.consentTeam}
+            label="I confirm that I have consent from all team members to submit their details."
+          />
+        )}
       </div>
 
       {/* Cloudflare Turnstile Widget */}

@@ -45,16 +45,19 @@ export function HeroSection() {
                     loop
                     muted
                     playsInline
+                    preload="metadata"
+                    poster="/bg-poster.jpg"
                     className="absolute inset-0 w-full h-full object-cover"
                     src={media.src}
                   />
                 ) : (
                   <Image
                     src={media.src}
-                    alt="Hero Background"
+                    alt="XE Labs AI-native product lab"
                     fill
+                    sizes="100vw"
                     className="object-cover"
-                    priority
+                    quality={80}
                   />
                 )}
               </motion.div>

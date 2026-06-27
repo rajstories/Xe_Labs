@@ -3,6 +3,10 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import Link from 'next/link';
+import { careersFaqs } from '@/lib/faqs';
+import { JsonLd } from '@/components/json-ld';
+import { SITE_URL, breadcrumbSchema, faqSchema, webPageSchema } from '@/lib/seo';
+import { buildSprintSchedule, buildSprintTimeline } from '@/lib/build-sprint';
 import { 
   ChevronRight, 
   Terminal, 
@@ -57,8 +61,41 @@ function FaqItem({ question, answer }: { question: string, answer: React.ReactNo
 }
 
 export default function CareersPage() {
+  const title = 'XE Labs Build Sprint 2026 | AI Product Hackathon';
+  const description = 'Apply for XE Labs Build Sprint 2026, a product-focused AI hackathon for student builders. Build real AI tools, agents, creator-tech platforms, voice AI systems, and automation products. Selected finalists may get paid internship opportunities.';
+  const eventSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Event',
+    '@id': `${SITE_URL}/careers#event`,
+    name: 'XE Labs Build Sprint 2026',
+    url: `${SITE_URL}/careers`,
+    description: 'A free, online, product-focused AI hackathon for student builders.',
+    eventAttendanceMode: 'https://schema.org/OnlineEventAttendanceMode',
+    eventStatus: 'https://schema.org/EventScheduled',
+    startDate: buildSprintSchedule.registrationOpens,
+    endDate: buildSprintSchedule.winnerAnnouncement,
+    doorTime: buildSprintSchedule.registrationOpens,
+    location: { '@type': 'VirtualLocation', url: `${SITE_URL}/careers` },
+    organizer: { '@id': `${SITE_URL}/#organization` },
+    offers: {
+      '@type': 'Offer',
+      url: `${SITE_URL}/careers/apply`,
+      price: 0,
+      priceCurrency: 'INR',
+      availability: 'https://schema.org/InStock',
+      validFrom: buildSprintSchedule.registrationOpens,
+      validThrough: buildSprintSchedule.registrationCloses,
+    },
+  };
+
   return (
     <main className="min-h-screen bg-[#050505] selection:bg-white selection:text-black pt-32 pb-24 font-sans text-gray-200">
+      <JsonLd data={[
+        webPageSchema({ path: '/careers', name: title, description, type: 'CollectionPage' }),
+        breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'XE Labs Build Sprint 2026', path: '/careers' }]),
+        eventSchema,
+        faqSchema(careersFaqs),
+      ]} />
       
       {/* 1. Hero Section */}
       <section className="relative w-full flex flex-col items-center justify-center overflow-hidden px-4 mb-32">
@@ -90,28 +127,66 @@ export default function CareersPage() {
             Join XE Labs through product sprints, hackathons, and paid internships to build real AI tools, SaaS products, agents, and automation systems.
           </motion.p>
           
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.3 }}
-            className="mt-4 text-sm text-[#fabd00]/80 font-medium tracking-wide uppercase"
-          >
-            Real products. Real users. Real internship opportunities.
-          </motion.p>
+            <div className="mt-8 flex flex-wrap justify-center gap-3 max-w-3xl">
+              {[
+                "No registration fee",
+                "Online format",
+                "Solo or team up to 3",
+                "Secure application",
+                "Paid internship opportunity for selected finalists"
+              ].map((badge, i) => (
+                <div key={i} className="px-3 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm text-xs font-medium text-white/80">
+                  {badge}
+                </div>
+              ))}
+            </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="mt-12 flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto"
-          >
-            <Link href="/careers/apply" className="w-full sm:w-auto px-8 py-4 rounded-lg bg-[#fabd00] hover:bg-[#fabd00]/90 text-black font-semibold transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
-              Apply for Build Sprint 2026 <ArrowRight className="w-4 h-4" />
-            </Link>
-            <Link href="#tracks" className="w-full sm:w-auto px-8 py-4 rounded-lg border border-white/20 bg-white/5 hover:bg-white/10 text-white font-semibold transition-all duration-300 backdrop-blur-sm flex items-center justify-center">
-              View Tracks
-            </Link>
-          </motion.div>
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 0.3 }}
+              className="mt-6 text-sm text-[#fabd00] font-medium tracking-wide uppercase max-w-2xl mx-auto"
+            >
+              Selected finalists may be offered paid internship opportunities based on performance, role fit, and interview.
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="mt-10 flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto mx-auto justify-center"
+            >
+              <Link href="/careers/apply" className="w-full sm:w-auto px-8 py-4 rounded-lg bg-[#fabd00] hover:bg-[#fabd00]/90 text-black font-semibold transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
+                Apply for Build Sprint 2026 <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link href="#tracks" className="w-full sm:w-auto px-8 py-4 rounded-lg border border-white/20 bg-white/5 hover:bg-white/10 text-white font-semibold transition-all duration-300 backdrop-blur-sm flex items-center justify-center">
+                View Tracks
+              </Link>
+            </motion.div>
+        </div>
+      </section>
+
+      {/* 1.5 Why Build Sprint 2026 Exists */}
+      <section className="w-full max-w-7xl mx-auto px-6 mb-32">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">Why Build Sprint 2026 Exists</h2>
+          <p className="text-lg text-white/70 max-w-3xl mx-auto leading-relaxed">
+            We are opening selected product challenges to student builders so they can solve real-world problems and get considered for paid internship opportunities. Build Sprint 2026 is not a traditional college fest. It is a product-focused challenge designed to identify serious builders who can think, ship, and continue building with XE Labs.
+          </p>
+        </div>
+        <div className="grid md:grid-cols-3 gap-6">
+          {[
+            { title: "Build real product prototypes", icon: Layers },
+            { title: "Work on AI-native software challenges", icon: Cpu },
+            { title: "Get considered for paid internship opportunities", icon: Briefcase }
+          ].map((card, i) => (
+            <div key={i} className="flex flex-col items-center text-center p-8 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm hover:border-white/20 transition-all">
+              <div className="w-16 h-16 rounded-2xl bg-black border border-white/10 flex items-center justify-center mb-6">
+                <card.icon className="w-8 h-8 text-[#fabd00]" />
+              </div>
+              <h3 className="text-xl font-bold text-white">{card.title}</h3>
+            </div>
+          ))}
         </div>
       </section>
 
@@ -129,7 +204,7 @@ export default function CareersPage() {
               Why Build With <span className="text-[#fabd00]">XE Labs</span>
             </h2>
             <p className="text-lg text-white/70 mb-8 leading-relaxed">
-              We are not hiring interns for dummy tasks. Builders work on real AI product ideas. Selected students get paid internship opportunities to work on cutting-edge systems used in production environments.
+              We are not evaluating builders through dummy tasks. The sprint uses practical AI product ideas, and selected finalists may be considered for paid internships to continue developing promising prototypes.
             </p>
             <ul className="space-y-4">
               {[
@@ -151,7 +226,7 @@ export default function CareersPage() {
             <Terminal className="w-12 h-12 text-[#fabd00] mb-6" />
             <h3 className="text-2xl font-bold text-white mb-4">Ambitious. Clean. Startup-like.</h3>
             <p className="text-white/70 leading-relaxed mb-8">
-              We value execution over credentials. At XE Labs, you will be treated as a product owner, not just an intern. Your code will ship. Your designs will be used. Your ideas will be heard.
+              We value execution over credentials. Builders are expected to think like product owners: understand the user, define the smallest useful scope, explain technical choices, and respond clearly to feedback.
             </p>
             <div className="inline-flex items-center gap-2 text-[#fabd00] font-medium border-b border-[#fabd00]/30 pb-1 hover:border-[#fabd00] transition-colors cursor-pointer">
               Explore Our Work culture <ArrowRight className="w-4 h-4" />
@@ -171,10 +246,10 @@ export default function CareersPage() {
 
         <div className="grid md:grid-cols-4 gap-6">
           {[
-            { step: "Round 1", title: "Registration & Idea Submission", icon: Lightbulb },
-            { step: "Round 2", title: "Prototype Build", icon: Code },
-            { step: "Round 3", title: "Final Demo", icon: Video },
-            { step: "Round 4", title: "Paid Internship Interviews", icon: Briefcase },
+            { step: "29 Jun – 7 Jul", title: "Registration & Idea Submission", icon: Lightbulb },
+            { step: "10 – 21 Jul", title: "Selected Prototype Build", icon: Code },
+            { step: "30 Jul", title: "Top 12 Final Presentations", icon: Video },
+            { step: "After 31 Jul", title: "Internship Follow-up", icon: Briefcase },
           ].map((item, i) => (
             <motion.div
               key={i}
@@ -315,7 +390,7 @@ export default function CareersPage() {
               { label: "Full-stack developers", icon: Layers },
               { label: "UI/UX designers", icon: Sparkles },
               { label: "Product builders", icon: Rocket },
-              { label: "Students of any year", icon: Calendar },
+              { label: "2027 & 2028 graduates", icon: Calendar },
             ].map((item, i) => (
               <div key={i} className="flex flex-col p-4 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 transition-colors">
                 <item.icon className="w-5 h-5 text-[#fabd00] mb-2" />
@@ -413,16 +488,12 @@ export default function CareersPage() {
 
       {/* 9. Timeline */}
       <section className="w-full max-w-4xl mx-auto px-6 mb-32">
-        <h2 className="text-3xl md:text-5xl font-bold text-white mb-16 text-center">Sprint Timeline</h2>
+        <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 text-center">Build Sprint 2026 Timeline</h2>
+        <p className="text-center text-white/60 max-w-3xl mx-auto mb-16">
+          All times are in Indian Standard Time (IST). Prototype portal access is limited to teams selected after idea evaluation.
+        </p>
         <div className="space-y-6 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-white/20 before:to-transparent">
-          {[
-            { phase: "Applications Open", date: "[Add Date]" },
-            { phase: "Registration Deadline", date: "[Add Date]" },
-            { phase: "Idea Submission", date: "[Add Date]" },
-            { phase: "Prototype Build Week", date: "[Add Date]" },
-            { phase: "Final Demo", date: "[Add Date]" },
-            { phase: "Internship Interviews", date: "[Add Date]" },
-          ].map((item, i) => (
+          {buildSprintTimeline.map((item, i) => (
             <motion.div 
               key={i}
               initial={{ opacity: 0, y: 20 }}
@@ -439,9 +510,28 @@ export default function CareersPage() {
                   <h4 className="font-bold text-white text-lg">{item.phase}</h4>
                 </div>
                 <div className="text-sm font-medium text-[#fabd00]">{item.date}</div>
+                <p className="mt-2 text-sm leading-relaxed text-white/55">{item.detail}</p>
               </div>
             </motion.div>
           ))}
+        </div>
+        <div className="mt-10 rounded-2xl border border-white/10 bg-white/[0.03] p-6 text-center">
+          <p className="text-sm leading-relaxed text-white/65">
+            Internship-related next steps will be shared after the competition. XE Labs will contact relevant winners or selected finalists using the email address or contact details provided during registration.
+          </p>
+        </div>
+      </section>
+
+      <section className="w-full max-w-5xl mx-auto px-6 mb-32">
+        <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-8 md:p-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-5">Build Sprint rules at a glance</h2>
+          <p className="text-white/65 leading-relaxed mb-7">
+            Submissions must be original, respect third-party licenses and platform rules, avoid unauthorized scraping or private data, and disclose important APIs, datasets, and open-source dependencies. Participants keep ownership of their original submissions; any later internship work uses a separate written agreement.
+          </p>
+          <div className="flex flex-wrap gap-4">
+            <Link href="/terms" className="text-[#fabd00] font-semibold hover:underline">Read Build Sprint terms</Link>
+            <Link href="/privacy" className="text-white/80 font-semibold hover:text-white">Review applicant privacy policy</Link>
+          </div>
         </div>
       </section>
 
@@ -451,49 +541,9 @@ export default function CareersPage() {
           <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">Frequently Asked Questions</h2>
         </div>
         <div className="space-y-4">
-          <FaqItem 
-            question="Who can participate?" 
-            answer="Any current student (engineering, design, product, etc.) with a strong ability to build can participate. Both teams and solo builders are welcome."
-          />
-          <FaqItem 
-            question="Can solo students apply?" 
-            answer="Yes, solo builders are completely welcome and evaluated on the same criteria."
-          />
-          <FaqItem 
-            question="Is this online or offline?" 
-            answer="The entire build sprint and demo process is conducted online."
-          />
-          <FaqItem 
-            question="Will internships be paid?" 
-            answer="Yes, selected candidates offered an internship will receive a paid stipend based on their role and expertise."
-          />
-          <FaqItem 
-            question="Do we need to build a complete product?" 
-            answer="You need to build a functional prototype that demonstrates the core value proposition. It doesn't need to be market-ready, but it shouldn't just be a mockup either."
-          />
-          <FaqItem 
-            question="Can we use AI tools and APIs?" 
-            answer="Absolutely. We encourage the use of modern AI APIs (OpenAI, Anthropic, Gemini, etc.), open-source models, and developer tools to ship faster."
-          />
-          <FaqItem 
-            question="Who owns the submitted code?" 
-            answer="Participants retain ownership of their original hackathon submissions. XE Labs may review, evaluate, showcase, and discuss submitted prototypes. Selected participants who join a paid internship will work under a separate internship agreement for further production development."
-          />
-          <FaqItem 
-            question="What happens after the hackathon?" 
-            answer="Winners and strong finalists will be invited for an interview. If it's a mutual fit, you will be offered a paid internship to work on real products at XE Labs."
-          />
-          <FaqItem 
-            question="Can colleges officially share this with students?" 
-            answer={
-              <>
-                Yes, Training & Placement cells are welcome to share this opportunity. <br/><br/>
-                <span className="text-white/50 text-xs mt-2 block">
-                  Official communication and internship administration for this program may be facilitated through LXDIA AI Pvt. Ltd. until XE Labs operates under its own legal entity.
-                </span>
-              </>
-            }
-          />
+          {careersFaqs.map((item) => (
+            <FaqItem key={item.question} question={item.question} answer={item.answer} />
+          ))}
         </div>
       </section>
 

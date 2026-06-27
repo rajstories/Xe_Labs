@@ -1,10 +1,18 @@
 import React from 'react';
 import { TrackPageLayout, TrackData } from '@/components/track-page-layout';
+import { JsonLd } from '@/components/json-ld';
+import { SITE_URL, breadcrumbSchema, createMetadata, faqSchema, webPageSchema } from '@/lib/seo';
 
-export const metadata = {
-  title: 'VoiceCore Track - Build Sprint 2026 | XE Labs',
-  description: 'Indian Voice AI Agent track details.',
-};
+const title = 'VoiceCore Track | Indian Voice AI Agent';
+const description = 'Build VoiceCore, a Hindi and Hinglish Indian voice AI agent with speech recognition, knowledge-base answers, natural voice output, fallback handling, and multi-turn memory.';
+
+export const metadata = createMetadata({
+  title,
+  description,
+  path: '/build-sprint/voicecore',
+  image: '/build-sprint/voicecore/opengraph-image',
+  keywords: ['VoiceCore', 'Indian voice AI agent', 'AI voice agent Hindi', 'Hinglish voice AI'],
+});
 
 const trackData: TrackData = {
   trackName: "VoiceCore",
@@ -73,9 +81,34 @@ const trackData: TrackData = {
     { category: "TTS (Text to Speech)", tech: "IndicTTS / Coqui / ElevenLabs / Google TTS" },
     { category: "Backend API", tech: "FastAPI / Node.js" }
   ],
-  complianceNote: "The agent must not hallucinate facts. If it does not know an answer or cannot find support in the knowledge base, it must clearly say so and suggest a useful next step."
+  complianceNote: "The agent must not hallucinate facts. If it does not know an answer or cannot find support in the knowledge base, it must clearly say so and suggest a useful next step.",
+  faqs: [
+    {
+      question: 'What is VoiceCore?',
+      answer: 'VoiceCore is an XE Labs Build Sprint 2026 challenge track for a practical Indian voice AI agent. The prototype should understand Hindi, Hinglish, or Indian English speech, answer from an uploaded knowledge base, speak through a natural voice, remember recent turns, and handle unsupported questions without inventing facts.',
+    },
+    {
+      question: 'What should teams build in VoiceCore?',
+      answer: 'Teams should build a browser-based voice agent with microphone input, speech transcription, grounded knowledge-base retrieval, LLM response generation, transcript display, text-to-speech output, and at least three turns of conversation memory. The agent must provide a clear fallback when its knowledge base does not support an answer.',
+    },
+    {
+      question: 'Which languages should VoiceCore support?',
+      answer: 'The required scope is Hindi, Hinglish, or Indian English, with a strong emphasis on realistic Indian speech. Teams may support additional regional languages as a bonus. The experience should make its actual language coverage clear and should not claim reliable support for accents or languages that were not tested.',
+    },
+  ],
 };
 
 export default function VoiceCorePage() {
-  return <TrackPageLayout data={trackData} />;
+  const path = '/build-sprint/voicecore';
+  return (
+    <>
+      <JsonLd data={[
+        webPageSchema({ path, name: title, description }),
+        breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'XE Labs Build Sprint 2026', path: '/careers' }, { name: 'VoiceCore', path }]),
+        faqSchema(trackData.faqs),
+        { '@context': 'https://schema.org', '@type': 'TechArticle', headline: title, description, url: `${SITE_URL}${path}`, about: 'Hindi and Hinglish Indian voice AI agent hackathon challenge', author: { '@id': `${SITE_URL}/#organization` }, isPartOf: { '@id': `${SITE_URL}/careers#event` } },
+      ]} />
+      <TrackPageLayout data={trackData} />
+    </>
+  );
 }

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import crypto from 'crypto';
+import { buildSprintSchedule } from '@/lib/build-sprint';
 
 // In-memory rate limiter (simple implementation for prototype)
 const rateLimitMap = new Map<string, { count: number; lastReset: number }>();
@@ -188,6 +189,24 @@ async function verifyTurnstile(token: string, secretKey: string): Promise<boolea
 
 export async function POST(req: Request) {
   try {
+    const now = Date.now();
+    const registrationOpens = Date.parse(buildSprintSchedule.registrationOpens);
+    const registrationCloses = Date.parse(buildSprintSchedule.registrationCloses);
+
+    if (now < registrationOpens) {
+      return NextResponse.json(
+        { status: 'error', message: 'Registration opens on 29 June 2026 at 9:00 AM IST.' },
+        { status: 403 },
+      );
+    }
+
+    if (now > registrationCloses) {
+      return NextResponse.json(
+        { status: 'error', message: 'Registration closed on 7 July 2026 at 11:00 AM IST.' },
+        { status: 410 },
+      );
+    }
+
     const ip = req.headers.get('x-forwarded-for') || 'local';
     
     // Rate limit checks

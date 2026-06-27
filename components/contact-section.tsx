@@ -25,7 +25,7 @@ Budget Range: ${formData.budgetRange}
 Message:
 ${formData.message}`;
 
-    const mailtoUrl = `mailto:info@xelabs.in?subject=${encodeURIComponent(`Enquiry from ${formData.name}`)}&body=${encodeURIComponent(emailBody)}`;
+    const mailtoUrl = `mailto:team@xelabs.in?subject=${encodeURIComponent(`Enquiry from ${formData.name}`)}&body=${encodeURIComponent(emailBody)}`;
     window.location.href = mailtoUrl;
   };
 

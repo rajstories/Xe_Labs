@@ -35,6 +35,7 @@ export interface TrackData {
   judgingCriteria: { name: string; weight: string }[];
   suggestedTechStack: { category: string; tech: string }[];
   complianceNote: string;
+  faqs: { question: string; answer: string }[];
 }
 
 export function TrackPageLayout({ data }: { data: TrackData }) {
@@ -43,11 +44,13 @@ export function TrackPageLayout({ data }: { data: TrackData }) {
       
       {/* Top Navbar / Breadcrumb (Simulated via padding, actual header handles main nav) */}
       <div className="w-full max-w-5xl mx-auto px-6 mb-8 flex justify-between items-center z-10 relative">
-        <div className="flex items-center gap-2 text-sm text-white/50">
-          <Link href="/careers" className="hover:text-white transition-colors">Careers</Link>
+        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-sm text-white/50">
+          <Link href="/" className="hover:text-white transition-colors">Home</Link>
+          <span>/</span>
+          <Link href="/careers" className="hover:text-white transition-colors">Build Sprint 2026</Link>
           <span>/</span>
           <span className="text-white/80">{data.trackName}</span>
-        </div>
+        </nav>
       </div>
 
       {/* 1. Hero Section */}
@@ -70,7 +73,7 @@ export function TrackPageLayout({ data }: { data: TrackData }) {
           </div>
           
           <h2 className="text-3xl md:text-4xl font-semibold text-white/90 mb-6 leading-tight max-w-3xl">
-            "{data.heroHeadline}"
+            &quot;{data.heroHeadline}&quot;
           </h2>
           
           <p className="text-lg text-white/70 mb-10 max-w-3xl leading-relaxed">
@@ -352,6 +355,21 @@ export function TrackPageLayout({ data }: { data: TrackData }) {
                 </li>
               ))}
             </ul>
+          </div>
+        </section>
+
+        <section aria-labelledby={`${data.trackName.toLowerCase()}-faq`}>
+          <div className="mb-8">
+            <h2 id={`${data.trackName.toLowerCase()}-faq`} className="text-3xl md:text-4xl font-bold text-white">{data.trackName} track FAQ</h2>
+            <p className="mt-3 text-white/55">Direct answers about the challenge scope and expected prototype.</p>
+          </div>
+          <div className="space-y-4">
+            {data.faqs.map((item) => (
+              <details key={item.question} className="group rounded-2xl border border-white/10 bg-white/[0.03] p-6 open:border-[#fabd00]/30">
+                <summary className="cursor-pointer list-none pr-6 text-lg font-semibold text-white marker:hidden">{item.question}</summary>
+                <p className="mt-4 max-w-3xl text-sm leading-7 text-white/65">{item.answer}</p>
+              </details>
+            ))}
           </div>
         </section>
 

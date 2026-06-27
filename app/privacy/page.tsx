@@ -1,15 +1,21 @@
 import React from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Shield } from 'lucide-react';
+import { JsonLd } from '@/components/json-ld';
+import { breadcrumbSchema, createMetadata, webPageSchema } from '@/lib/seo';
 
-export const metadata = {
-  title: 'Privacy Policy | XE Labs',
-  description: 'Privacy Policy and applicant data protection policy for XE Labs Build Sprint 2026.',
-};
+const title = 'Privacy Policy | XE Labs';
+const description = 'Read how XE Labs collects, uses, protects, and processes applicant and website data for Build Sprint 2026 and related communication.';
+
+export const metadata = createMetadata({ title, description, path: '/privacy' });
 
 export default function PrivacyPage() {
   return (
     <main className="min-h-screen bg-[#030303] bg-[url('/grid-pattern.svg')] bg-center pt-32 pb-24 relative">
+      <JsonLd data={[
+        webPageSchema({ path: '/privacy', name: title, description }),
+        breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Privacy Policy', path: '/privacy' }]),
+      ]} />
       <div className="absolute inset-0 bg-gradient-to-b from-[#030303] via-transparent to-[#030303] pointer-events-none" />
       
       <div className="container mx-auto px-6 relative z-10 max-w-4xl">
@@ -34,7 +40,7 @@ export default function PrivacyPage() {
           <section className="space-y-4">
             <h2 className="text-2xl font-semibold text-white">1. Introduction</h2>
             <p>
-              At XE Labs (referred to as "we", "us", or "our"), we respect your privacy and are committed to protecting your personal data. 
+              At XE Labs (referred to as &quot;we&quot;, &quot;us&quot;, or &quot;our&quot;), we respect your privacy and are committed to protecting your personal data.
               This Privacy Policy explains how we collect, process, and secure the information you provide when applying for the 
               <strong>XE Labs Build Sprint 2026</strong>.
             </p>
@@ -49,7 +55,7 @@ export default function PrivacyPage() {
               <li>Primary applicant details: Name, Email Address, Phone Number, College/University, and Graduation Year.</li>
               <li>Professional profile links: GitHub profile, LinkedIn profile, and Portfolio/Personal Website.</li>
               <li>Evaluation details: Main tech stack, experience levels, details of past projects, track selection details, and project pitches.</li>
-              <li>Teammates' details (for team applications): Names, email addresses, roles, and GitHub profiles.</li>
+              <li>Teammates&apos; details (for team applications): Names, email addresses, roles, and GitHub profiles.</li>
               <li>Uploads: Resume PDF, and optional Pitch Deck or Architecture Diagram.</li>
             </ul>
           </section>
@@ -75,7 +81,7 @@ export default function PrivacyPage() {
             <ul className="list-disc pl-6 space-y-2">
               <li>All application records are securely transmitted from the browser via HTTPS.</li>
               <li>Application data is logged directly into restricted, non-public Google Sheets and files are stored in private Google Drive folders.</li>
-              <li>Sensitive fields (such as emails, phones, and resume links) are encrypted at rest using server-side AES-256-GCM encryption.</li>
+              <li>Where the server-side encryption configuration is enabled, sensitive fields such as emails, phone numbers, and file links are encrypted before they are written to the application log.</li>
               <li>Access to Google Sheet logs and Google Drive upload folders is strictly restricted to the organizing team.</li>
             </ul>
           </section>
@@ -101,7 +107,7 @@ export default function PrivacyPage() {
             <p>
               If you have any questions, concerns, or requests regarding your data privacy, you can reach out to us at:
               <br />
-              <a href="mailto:info@xelabs.in" className="text-[#fabd00] hover:underline">info@xelabs.in</a>
+              <a href="mailto:team@xelabs.in" className="text-[#fabd00] hover:underline">team@xelabs.in</a>
             </p>
           </section>
         </div>

@@ -2,10 +2,10 @@ import Link from 'next/link';
 
 export function Footer() {
   return (
-    <footer className="w-full bg-black border-t border-gray-900 py-12 px-6 md:px-12">
-      <div className="max-w-[1600px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
-        <div className="flex items-center">
-          <svg viewBox="0 0 160 110" className="w-[60px] h-auto md:w-[70px]" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <footer className="w-full bg-black border-t border-gray-900 py-16 px-6 md:px-12">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+        <div className="col-span-1 md:col-span-1">
+          <svg viewBox="0 0 160 110" className="w-[60px] h-auto md:w-[70px] mb-6" fill="none" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <filter id="neonGlowLogoFooter" x="-50%" y="-50%" width="200%" height="200%">
                 <feGaussianBlur stdDeviation="2.5" result="blur" />
@@ -28,15 +28,52 @@ export function Footer() {
               <text x="42" y="0">S</text>
             </g>
           </svg>
-        </div>
-        <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-8">
-          <p className="text-white/60 text-xs tracking-widest uppercase">
-            &copy; {new Date().getFullYear()} XE Labs. All rights reserved.
+          <p className="text-white/60 text-sm leading-relaxed mb-4">
+            XE Labs is an AI-native product lab building real-world AI tools, agents, automation systems, and SaaS products.
           </p>
-          <Link href="/privacy" className="text-white/40 hover:text-white text-xs tracking-widest uppercase transition-colors">
-            Privacy Policy
-          </Link>
         </div>
+
+        <div className="col-span-1">
+          <h4 className="text-white font-bold mb-4">Contact</h4>
+          <ul className="space-y-3 text-sm text-white/60">
+            <li>
+              Hackathon: <a href="mailto:hackathon@xelabs.in" className="hover:text-white transition-colors">hackathon@xelabs.in</a>
+            </li>
+            <li>
+              General: <a href="mailto:team@xelabs.in" className="hover:text-white transition-colors">team@xelabs.in</a>
+            </li>
+            <li className="pt-2">Location: Delhi NCR, India</li>
+          </ul>
+        </div>
+
+        <div className="col-span-1">
+          <h4 className="text-white font-bold mb-4">Quick Links</h4>
+          <ul className="space-y-3 text-sm text-white/60">
+            <li><Link href="/" className="hover:text-white transition-colors">Home</Link></li>
+            <li><Link href="/careers" className="hover:text-white transition-colors">Careers</Link></li>
+            <li><Link href="/careers" className="hover:text-white transition-colors">XE Labs Build Sprint 2026</Link></li>
+            <li><Link href="/build-sprint/influenceos" className="hover:text-white transition-colors">Explore InfluenceOS track</Link></li>
+            <li><Link href="/build-sprint/editdna" className="hover:text-white transition-colors">Explore EditDNA track</Link></li>
+            <li><Link href="/build-sprint/voicecore" className="hover:text-white transition-colors">Explore VoiceCore track</Link></li>
+            <li><Link href="/contact" className="hover:text-white transition-colors">Contact</Link></li>
+          </ul>
+        </div>
+
+        <div className="col-span-1">
+          <h4 className="text-white font-bold mb-4">Legal</h4>
+          <ul className="space-y-3 text-sm text-white/60">
+            <li><Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link></li>
+            <li><Link href="/terms" className="hover:text-white transition-colors">Terms & Conditions</Link></li>
+            <li><Link href="https://www.linkedin.com/company/xelabs/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">LinkedIn</Link></li>
+          </ul>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
+        <p className="text-white/40 text-xs leading-relaxed max-w-3xl text-center md:text-left">
+          &copy; {new Date().getFullYear()} XE Labs. All rights reserved. <br className="hidden md:block"/>
+          Official communication and internship administration for Build Sprint 2026 may be facilitated through LXDIA AI Pvt. Ltd. until XE Labs operates under its own legal entity. No registration fee. No hidden charges.
+        </p>
       </div>
     </footer>
   );

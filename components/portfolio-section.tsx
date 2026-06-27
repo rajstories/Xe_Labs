@@ -58,7 +58,7 @@ export function PortfolioSection() {
           className="mb-12"
         >
           <h2 className="text-gray-500 tracking-widest text-sm uppercase">
-            SELECTED WORK
+            SYSTEMS WE BUILD
           </h2>
         </motion.div>
 
@@ -110,7 +110,7 @@ export function PortfolioSection() {
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-[120px_1fr] gap-2 lg:gap-8">
                   <span className="text-gray-600 text-xs uppercase tracking-widest transition-colors duration-500 group-hover:text-gray-500">
-                    Outcome
+                    Intended outcome
                   </span>
                   <span className="text-gray-400 font-light leading-relaxed transition-colors duration-500 group-hover:text-black">
                     {item.outcome}
