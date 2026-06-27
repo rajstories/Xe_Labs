@@ -129,13 +129,6 @@ export function Header() {
             transition={{ duration: 0.3 }}
             className="fixed inset-0 z-[90] bg-black/98 backdrop-blur-lg flex flex-col items-center justify-center sm:hidden"
           >
-            <button 
-              className="absolute top-10 right-6 text-white p-2 z-[100]"
-              onClick={() => setIsMobileMenuOpen(false)}
-              aria-label="Close Menu"
-            >
-              <X size={32} />
-            </button>
             <nav className="flex flex-col items-center gap-8">
               {navLinks.map((link, index) => (
                 <motion.div
