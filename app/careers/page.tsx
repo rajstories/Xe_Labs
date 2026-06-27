@@ -204,91 +204,97 @@ export default function CareersPage() {
 
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Track 1 */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="flex flex-col p-8 rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm hover:-translate-y-2 hover:border-white/30 transition-all duration-500 group"
-          >
-            <div className="w-14 h-14 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
-              <Users className="w-7 h-7 text-[#fabd00]" />
-            </div>
-            <h3 className="text-2xl font-bold text-white mb-2">InfluenceOS</h3>
-            <div className="text-sm text-[#fabd00] font-medium mb-4">Creator Discovery & Campaign Intelligence Platform</div>
-            <p className="text-white/60 text-sm mb-6 leading-relaxed flex-grow">
-              Build a platform where brands can discover Instagram and YouTube creators, create campaigns, generate creator-wise tracking links, track performance, and get AI recommendations.
-            </p>
-            <ul className="space-y-2 mb-8">
-              {['Creator Search Engine', 'Campaign Management', 'Smart Tracking Links', 'Analytics Dashboard', 'AI Matchmaking'].map((feat, i) => (
-                <li key={i} className="flex items-start gap-2 text-sm text-white/80">
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#fabd00] mt-1.5 flex-shrink-0" />
-                  {feat}
-                </li>
-              ))}
-            </ul>
-            <Link href="/build-sprint/influenceos" className="inline-flex items-center justify-center w-full py-3 rounded-lg bg-white/10 hover:bg-white/20 text-white text-sm font-medium transition-colors">
-              Explore Track
-            </Link>
-          </motion.div>
+          <Link href="/build-sprint/influenceos" className="block group">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="flex flex-col h-full p-8 rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm hover:-translate-y-2 hover:border-white/30 transition-all duration-500"
+            >
+              <div className="w-14 h-14 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
+                <Users className="w-7 h-7 text-[#fabd00]" />
+              </div>
+              <h3 className="text-2xl font-bold text-white mb-2">InfluenceOS</h3>
+              <div className="text-sm text-[#fabd00] font-medium mb-4">Creator Discovery & Campaign Intelligence Platform</div>
+              <p className="text-white/60 text-sm mb-6 leading-relaxed flex-grow">
+                Build a platform where brands can discover Instagram and YouTube creators, create campaigns, generate creator-wise tracking links, track performance, and get AI recommendations.
+              </p>
+              <ul className="space-y-2 mb-8">
+                {['Creator Search Engine', 'Campaign Management', 'Smart Tracking Links', 'Analytics Dashboard', 'AI Matchmaking'].map((feat, i) => (
+                  <li key={i} className="flex items-start gap-2 text-sm text-white/80">
+                    <div className="w-1.5 h-1.5 rounded-full bg-[#fabd00] mt-1.5 flex-shrink-0" />
+                    {feat}
+                  </li>
+                ))}
+              </ul>
+              <div className="inline-flex items-center justify-center w-full py-3 rounded-lg bg-white/10 group-hover:bg-white/20 text-white text-sm font-medium transition-colors">
+                Explore Track
+              </div>
+            </motion.div>
+          </Link>
 
           {/* Track 2 */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="flex flex-col p-8 rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm hover:-translate-y-2 hover:border-white/30 transition-all duration-500 group"
-          >
-            <div className="w-14 h-14 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
-              <FileCode2 className="w-7 h-7 text-[#fabd00]" />
-            </div>
-            <h3 className="text-2xl font-bold text-white mb-2">EditDNA</h3>
-            <div className="text-sm text-[#fabd00] font-medium mb-4">AI Video Editing Automation Engine</div>
-            <p className="text-white/60 text-sm mb-6 leading-relaxed flex-grow">
-              Build an AI system that understands scripts, raw videos, reference styles, b-roll assets, captions, typography, and generates short-form video edit plans or rendered drafts.
-            </p>
-            <ul className="space-y-2 mb-8">
-              {['Script-to-Video Engine', 'Asset Contextualization', 'Automated Captions', 'Typography Styling', 'Render API Integration'].map((feat, i) => (
-                <li key={i} className="flex items-start gap-2 text-sm text-white/80">
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#fabd00] mt-1.5 flex-shrink-0" />
-                  {feat}
-                </li>
-              ))}
-            </ul>
-            <Link href="/build-sprint/editdna" className="inline-flex items-center justify-center w-full py-3 rounded-lg bg-white/10 hover:bg-white/20 text-white text-sm font-medium transition-colors">
-              Explore Track
-            </Link>
-          </motion.div>
+          <Link href="/build-sprint/editdna" className="block group">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="flex flex-col h-full p-8 rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm hover:-translate-y-2 hover:border-white/30 transition-all duration-500"
+            >
+              <div className="w-14 h-14 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
+                <FileCode2 className="w-7 h-7 text-[#fabd00]" />
+              </div>
+              <h3 className="text-2xl font-bold text-white mb-2">EditDNA</h3>
+              <div className="text-sm text-[#fabd00] font-medium mb-4">AI Video Editing Automation Engine</div>
+              <p className="text-white/60 text-sm mb-6 leading-relaxed flex-grow">
+                Build an AI system that understands scripts, raw videos, reference styles, b-roll assets, captions, typography, and generates short-form video edit plans or rendered drafts.
+              </p>
+              <ul className="space-y-2 mb-8">
+                {['Script-to-Video Engine', 'Asset Contextualization', 'Automated Captions', 'Typography Styling', 'Render API Integration'].map((feat, i) => (
+                  <li key={i} className="flex items-start gap-2 text-sm text-white/80">
+                    <div className="w-1.5 h-1.5 rounded-full bg-[#fabd00] mt-1.5 flex-shrink-0" />
+                    {feat}
+                  </li>
+                ))}
+              </ul>
+              <div className="inline-flex items-center justify-center w-full py-3 rounded-lg bg-white/10 group-hover:bg-white/20 text-white text-sm font-medium transition-colors">
+                Explore Track
+              </div>
+            </motion.div>
+          </Link>
 
           {/* Track 3 */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex flex-col p-8 rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm hover:-translate-y-2 hover:border-white/30 transition-all duration-500 group"
-          >
-            <div className="w-14 h-14 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
-              <Mic className="w-7 h-7 text-[#fabd00]" />
-            </div>
-            <h3 className="text-2xl font-bold text-white mb-2">VoiceCore</h3>
-            <div className="text-sm text-[#fabd00] font-medium mb-4">Indian Voice AI Agent</div>
-            <p className="text-white/60 text-sm mb-6 leading-relaxed flex-grow">
-              Build a Hindi/Hinglish voice agent that understands Indian speech, answers from a knowledge base, responds in a natural Indian voice, and handles multi-turn conversations.
-            </p>
-            <ul className="space-y-2 mb-8">
-              {['Hinglish Speech Recognition', 'RAG Knowledge Base', 'Natural Voice Synthesis', 'Low-Latency Streaming', 'Conversation State Management'].map((feat, i) => (
-                <li key={i} className="flex items-start gap-2 text-sm text-white/80">
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#fabd00] mt-1.5 flex-shrink-0" />
-                  {feat}
-                </li>
-              ))}
-            </ul>
-            <Link href="/build-sprint/voicecore" className="inline-flex items-center justify-center w-full py-3 rounded-lg bg-white/10 hover:bg-white/20 text-white text-sm font-medium transition-colors">
-              Explore Track
-            </Link>
-          </motion.div>
+          <Link href="/build-sprint/voicecore" className="block group">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="flex flex-col h-full p-8 rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm hover:-translate-y-2 hover:border-white/30 transition-all duration-500"
+            >
+              <div className="w-14 h-14 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
+                <Mic className="w-7 h-7 text-[#fabd00]" />
+              </div>
+              <h3 className="text-2xl font-bold text-white mb-2">VoiceCore</h3>
+              <div className="text-sm text-[#fabd00] font-medium mb-4">Indian Voice AI Agent</div>
+              <p className="text-white/60 text-sm mb-6 leading-relaxed flex-grow">
+                Build a Hindi/Hinglish voice agent that understands Indian speech, answers from a knowledge base, responds in a natural Indian voice, and handles multi-turn conversations.
+              </p>
+              <ul className="space-y-2 mb-8">
+                {['Hinglish Speech Recognition', 'RAG Knowledge Base', 'Natural Voice Synthesis', 'Low-Latency Streaming', 'Conversation State Management'].map((feat, i) => (
+                  <li key={i} className="flex items-start gap-2 text-sm text-white/80">
+                    <div className="w-1.5 h-1.5 rounded-full bg-[#fabd00] mt-1.5 flex-shrink-0" />
+                    {feat}
+                  </li>
+                ))}
+              </ul>
+              <div className="inline-flex items-center justify-center w-full py-3 rounded-lg bg-white/10 group-hover:bg-white/20 text-white text-sm font-medium transition-colors">
+                Explore Track
+              </div>
+            </motion.div>
+          </Link>
         </div>
       </section>
 

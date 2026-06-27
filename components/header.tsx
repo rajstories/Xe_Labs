@@ -8,7 +8,7 @@ export function Header() {
   const pathname = usePathname();
 
   useEffect(() => {
-    if (pathname?.startsWith('/careers')) return;
+    if (pathname?.startsWith('/careers') || pathname?.startsWith('/build-sprint')) return;
 
     let lastScrollY = window.scrollY;
     const handleScroll = () => {
@@ -29,7 +29,7 @@ export function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [pathname]);
 
-  if (pathname?.startsWith('/careers')) {
+  if (pathname?.startsWith('/careers') || pathname?.startsWith('/build-sprint')) {
     return null;
   }
 

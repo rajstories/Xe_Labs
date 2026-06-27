@@ -48,14 +48,6 @@ export function TrackPageLayout({ data }: { data: TrackData }) {
           <span>/</span>
           <span className="text-white/80">{data.trackName}</span>
         </div>
-        
-        {/* The requested top-right Apply Button */}
-        <Link 
-          href="/careers/apply" 
-          className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-lg bg-[#fabd00]/10 border border-[#fabd00]/30 text-[#fabd00] hover:bg-[#fabd00] hover:text-black font-semibold text-xs uppercase tracking-wider transition-all"
-        >
-          Apply for this Track
-        </Link>
       </div>
 
       {/* 1. Hero Section */}
