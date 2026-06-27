@@ -3,8 +3,8 @@ import Link from 'next/link';
 export function Footer() {
   return (
     <footer className="w-full bg-black border-t border-gray-900 py-16 px-6 md:px-12">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-5 gap-8 mb-12">
-        <div className="col-span-1 md:col-span-1">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-6 gap-8 md:gap-12 mb-12">
+        <div className="col-span-1 md:col-span-2 pr-0 md:pr-8">
           <svg viewBox="0 0 160 110" className="w-[60px] h-auto md:w-[70px] mb-6" fill="none" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <filter id="neonGlowLogoFooter" x="-50%" y="-50%" width="200%" height="200%">
