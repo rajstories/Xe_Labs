@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ChevronRight, ChevronLeft, Check } from 'lucide-react';
+import { ChevronRight, ChevronLeft, Check, Loader2 } from 'lucide-react';
 import { FormInput, FormSelect, FormTextarea, FormCheckbox, FileUpload } from './form-ui';
 import { SuccessScreen } from './success-screen';
 import { SummaryCard } from './summary-card';
@@ -101,6 +101,21 @@ const initialFormData: FormData = {
   consentData: false,
 };
 
+const toBase64 = (file: File): Promise<string> =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      if (typeof reader.result === 'string') {
+        const base64 = reader.result.split(',')[1];
+        resolve(base64);
+      } else {
+        reject(new Error('Failed to convert file to base64.'));
+      }
+    };
+    reader.onerror = (error) => reject(error);
+  });
+
 const TOTAL_STEPS = 7;
 
 export function MultiStepForm() {
@@ -109,6 +124,7 @@ export function MultiStepForm() {
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const updateFormData = (fields: Partial<FormData>) => {
     setFormData((prev) => ({ ...prev, ...fields }));
@@ -184,13 +200,132 @@ export function MultiStepForm() {
   };
 
   const handleSubmit = async () => {
-    if (validateStep(7)) {
-      setIsSubmitting(true);
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+    if (!validateStep(7)) return;
+
+    setSubmitError(null);
+
+    // Validate files before attempting conversion
+    if (!formData.resume) {
+      setSubmitError('Resume is required.');
+      return;
+    }
+    if (formData.resume.type !== 'application/pdf') {
+      setSubmitError('Resume file must be a PDF.');
+      return;
+    }
+    if (formData.resume.size > 5 * 1024 * 1024) {
+      setSubmitError('Resume file must be under 5MB.');
+      return;
+    }
+
+    if (formData.pitchDeck) {
+      if (formData.pitchDeck.type !== 'application/pdf') {
+        setSubmitError('Pitch deck file must be a PDF.');
+        return;
+      }
+      if (formData.pitchDeck.size > 10 * 1024 * 1024) {
+        setSubmitError('Pitch deck file must be under 10MB.');
+        return;
+      }
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const resumeBase64 = await toBase64(formData.resume);
+      const pitchDeckBase64 = formData.pitchDeck ? await toBase64(formData.pitchDeck) : null;
+
+      // Send techStack as a clean array of strings
+      const techStackArray = formData.techStack
+        .split(',')
+        .map((s) => s.trim())
+        .filter(Boolean);
+
+      const payload: any = {
+        applicationType: formData.applicationType,
+        track: formData.track,
+        internshipInterest: formData.internshipInterest,
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        phone: formData.phone,
+        college: formData.college,
+        graduationYear: formData.graduationYear,
+        linkedin: formData.linkedin,
+        github: formData.github,
+        portfolio: formData.portfolio,
+        techStack: techStackArray,
+        experienceLevel: formData.experienceLevel,
+        pastProjects: formData.pastProjects,
+        whyThisTrack: formData.whyThisTrack,
+        ideaPitch: formData.ideaPitch,
+        availability: formData.availability,
+        howDidYouHear: formData.howDidYouHear,
+        resumeName: formData.resume.name,
+        resumeData: resumeBase64,
+        pitchDeckName: formData.pitchDeck ? formData.pitchDeck.name : null,
+        pitchDeckData: pitchDeckBase64,
+      };
+
+      // Set team details if type is Team, otherwise nullify/omit them
+      if (formData.applicationType === 'Team') {
+        payload.teamName = formData.teamName;
+        payload.teamSize = formData.teamSize;
+        payload.member2Name = formData.member2Name;
+        payload.member2Email = formData.member2Email;
+        payload.member2Role = formData.member2Role;
+        payload.member2Github = formData.member2Github;
+        
+        if (formData.teamSize === '3') {
+          payload.member3Name = formData.member3Name;
+          payload.member3Email = formData.member3Email;
+          payload.member3Role = formData.member3Role;
+          payload.member3Github = formData.member3Github;
+        } else {
+          payload.member3Name = null;
+          payload.member3Email = null;
+          payload.member3Role = null;
+          payload.member3Github = null;
+        }
+      } else {
+        payload.teamName = null;
+        payload.teamSize = null;
+        payload.member2Name = null;
+        payload.member2Email = null;
+        payload.member2Role = null;
+        payload.member2Github = null;
+        payload.member3Name = null;
+        payload.member3Email = null;
+        payload.member3Role = null;
+        payload.member3Github = null;
+      }
+
+      const scriptUrl = process.env.NEXT_PUBLIC_HACKATHON_SCRIPT_URL;
+      if (!scriptUrl) {
+        throw new Error('Google Apps Script Web App URL is not defined in environment variables.');
+      }
+
+      // POST to script web app URL (must use text/plain to avoid pre-flight CORS blocks with Google Script redirects)
+      const response = await fetch(scriptUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'text/plain;charset=utf-8',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const result = await response.json();
+
+      if (result.status === 'success') {
+        setIsSuccess(true);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        throw new Error(result.message || 'Submission failed. Please try again.');
+      }
+    } catch (err: any) {
+      setSubmitError(err.message || 'Failed to submit application. Network error or script failure.');
+    } finally {
       setIsSubmitting(false);
-      setIsSuccess(true);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
@@ -243,6 +378,12 @@ export function MultiStepForm() {
           </AnimatePresence>
         </div>
 
+        {submitError && (
+          <div className="text-red-400 text-sm mt-6 text-right font-medium">
+            {submitError}
+          </div>
+        )}
+
         {/* Navigation Buttons */}
         <div className="flex justify-between items-center mt-8">
           <button
@@ -265,7 +406,15 @@ export function MultiStepForm() {
               disabled={isSubmitting}
               className="flex items-center gap-2 px-8 py-3 rounded-full bg-[#fabd00] text-black font-semibold text-sm hover:bg-[#fabd00]/90 transition-colors disabled:opacity-70"
             >
-              {isSubmitting ? 'Submitting...' : 'Submit Application'} <Check className="w-4 h-4" />
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" /> Submitting...
+                </>
+              ) : (
+                <>
+                  Submit Application <Check className="w-4 h-4" />
+                </>
+              )}
             </button>
           )}
         </div>
