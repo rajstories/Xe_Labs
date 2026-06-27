@@ -99,25 +99,25 @@ export default function CareersPage() {
       ]} />
       
       {/* 1. Hero Section */}
+      {/* 1. Hero Section */}
       <section className="relative w-full overflow-hidden px-6 pt-24 pb-20 md:pt-32 md:pb-32 mb-16 md:mb-24">
-        {/* Subtle background glow */}
-        <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[600px] h-[600px] bg-[#fabd00]/5 rounded-full blur-[120px] -z-10 pointer-events-none" />
+        {/* Subtle premium background glow */}
+        <div className="absolute top-0 right-1/4 w-[800px] h-[800px] bg-gradient-to-b from-[#fabd00]/5 to-transparent rounded-full blur-[120px] -z-10 pointer-events-none opacity-50" />
         
-        <div className="w-full max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-12 lg:gap-8 z-10 relative">
+        <div className="w-full max-w-[1280px] mx-auto flex flex-col lg:grid lg:grid-cols-12 gap-y-12 lg:gap-x-16 lg:gap-y-16 z-10 relative">
           
-          {/* Left Column */}
-          <div className="flex-1 flex flex-col items-start text-left w-full">
+          {/* Left Column (Mobile: 1, Desktop: 1) */}
+          <div className="lg:col-span-7 flex flex-col items-start text-left w-full order-1">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             >
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#fabd00]/30 bg-[#fabd00]/10 text-xs font-bold text-[#fabd00] mb-6 tracking-widest uppercase">
-                <Sparkles className="w-3.5 h-3.5" />
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/5 text-[11px] md:text-xs font-semibold text-white/80 mb-6 tracking-widest uppercase">
                 XE Labs Build Sprint 2026
               </div>
               
-              <h1 className="font-bold tracking-tight leading-[1.1] text-4xl sm:text-5xl lg:text-[4rem] xl:text-[4.5rem] mb-6">
+              <h1 className="font-bold tracking-tight leading-[1.05] text-[2.5rem] sm:text-5xl lg:text-[4.5rem] xl:text-[5rem] mb-4">
                 <span className="block text-white">Build What The</span>
                 <span className="block text-[#fabd00]">Future Will Use.</span>
               </h1>
@@ -126,8 +126,17 @@ export default function CareersPage() {
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 0.1 }}
+              className="text-xl md:text-2xl font-semibold text-white/90 mb-4"
+            >
+              Turn your ideas into real AI products.
+            </motion.p>
+
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: 0.2 }}
-              className="text-lg md:text-xl text-white/60 font-normal max-w-[600px] leading-[1.6] mb-10"
+              className="text-base md:text-lg text-white/50 font-normal max-w-[640px] leading-[1.6] mb-10"
             >
               Join a product-focused AI sprint to build real tools across agents, LLM systems, creator-tech, voice AI, and automation.
             </motion.p>
@@ -136,13 +145,13 @@ export default function CareersPage() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full mb-6"
+              className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto mb-6"
             >
-              <Link href="/careers/apply" className="w-full sm:w-auto px-7 py-3.5 rounded-2xl bg-[#fabd00] hover:bg-[#fabd00]/90 text-black font-semibold transition-all duration-300 flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(250,189,0,0.2)]">
-                Apply for Build Sprint 2026 <ArrowRight className="w-4 h-4" />
+              <Link href="/careers/apply" className="px-8 py-4 rounded-[16px] bg-[#fabd00] hover:bg-[#fabd00]/90 text-black font-semibold transition-all duration-300 flex items-center justify-center shadow-[0_0_24px_rgba(250,189,0,0.15)] hover:shadow-[0_0_32px_rgba(250,189,0,0.25)]">
+                Apply for Build Sprint 2026
               </Link>
-              <Link href="#tracks" className="w-full sm:w-auto px-7 py-3.5 rounded-2xl border border-white/10 bg-white/5 hover:border-[#fabd00]/50 text-white font-medium transition-all duration-300 flex items-center justify-center">
-                View Tracks
+              <Link href="#tracks" className="px-8 py-4 rounded-[16px] border border-white/10 bg-black/20 hover:border-[#fabd00]/50 text-white font-medium transition-all duration-300 flex items-center justify-center">
+                Explore Tracks
               </Link>
             </motion.div>
 
@@ -150,52 +159,83 @@ export default function CareersPage() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: 0.4 }}
-              className="text-sm font-medium text-white/40 flex items-center gap-2"
+              className="text-xs md:text-sm font-medium text-white/40 flex flex-wrap gap-x-2 gap-y-1"
             >
-              No registration fee &middot; Online format &middot; Solo or team up to 3
+              <span>No registration fee</span>
+              <span>&middot;</span>
+              <span>Online format</span>
+              <span>&middot;</span>
+              <span>Solo or team up to 3</span>
             </motion.div>
           </div>
 
-          {/* Right Column: Program Card */}
+          {/* Highlights Strip (Mobile: 2, Desktop: 3) */}
           <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full lg:w-[480px] xl:w-[520px] flex-shrink-0"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-12 w-full order-2 lg:order-3"
           >
-            <div className="relative w-full rounded-[24px] border border-white/10 bg-white/[0.04] p-8 shadow-[0_8px_32px_rgba(0,0,0,0.4)] backdrop-blur-xl overflow-hidden group">
-              <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-10 mix-blend-overlay pointer-events-none" />
-              <div className="absolute inset-0 bg-gradient-to-br from-white/[0.02] to-transparent pointer-events-none" />
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+              {[
+                { title: "$2,000", desc: "Prize Pool", highlight: true },
+                { title: "3 Tracks", desc: "AI product challenges" },
+                { title: "0 Fee", desc: "No registration cost" },
+                { title: "Internship", desc: "For selected finalists" }
+              ].map((stat, i) => (
+                <div key={i} className={`flex flex-col items-start p-5 md:p-6 rounded-[20px] border ${stat.highlight ? 'border-[#fabd00]/30 bg-[#fabd00]/[0.02] shadow-[inset_0_0_40px_rgba(250,189,0,0.03)]' : 'border-white/5 bg-white/[0.02] hover:bg-white/[0.04]'} transition-colors duration-300`}>
+                  <span className={`text-xl md:text-2xl font-bold mb-1 ${stat.highlight ? 'text-[#fabd00] [text-shadow:0_0_12px_rgba(250,189,0,0.3)]' : 'text-white'}`}>{stat.title}</span>
+                  <span className="text-sm text-white/50">{stat.desc}</span>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Right Column: Program Card (Mobile: 3, Desktop: 2) */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            className="w-full lg:col-span-5 flex-shrink-0 order-3 lg:order-2"
+          >
+            <div className="relative w-full rounded-[24px] border border-white/[0.08] bg-white/[0.02] p-8 shadow-[0_24px_48px_rgba(0,0,0,0.2)] backdrop-blur-xl overflow-hidden group transition-transform hover:-translate-y-1 duration-500">
+              <div className="absolute inset-0 bg-gradient-to-br from-white/[0.04] to-transparent pointer-events-none" />
+              <div className="absolute inset-0 shadow-[inset_0_1px_1px_rgba(255,255,255,0.08)] rounded-[24px] pointer-events-none" />
               
-              <h3 className="text-xl font-bold text-white mb-8 relative z-10 flex items-center gap-2">
-                <Terminal className="w-5 h-5 text-[#fabd00]" />
+              <h3 className="text-lg font-semibold text-white mb-8 relative z-10 flex items-center gap-3">
+                <span className="w-2 h-2 rounded-full bg-[#fabd00] shadow-[0_0_8px_#fabd00]"></span>
                 Program Snapshot
               </h3>
 
-              <div className="space-y-6 relative z-10">
+              <div className="space-y-6 relative z-10 text-[15px]">
                 <div className="flex flex-col border-b border-white/5 pb-4">
-                  <span className="text-xs font-semibold tracking-wider text-white/40 uppercase mb-1">Format</span>
-                  <span className="text-white/90 font-medium">Online</span>
+                  <span className="text-[11px] font-semibold tracking-widest text-white/40 uppercase mb-1.5">Format</span>
+                  <span className="text-white/90">Online</span>
                 </div>
                 
                 <div className="flex flex-col border-b border-white/5 pb-4">
-                  <span className="text-xs font-semibold tracking-wider text-white/40 uppercase mb-1">Team Size</span>
-                  <span className="text-white/90 font-medium">Solo or up to 3</span>
+                  <span className="text-[11px] font-semibold tracking-widest text-white/40 uppercase mb-1.5">Team Size</span>
+                  <span className="text-white/90">Solo or up to 3</span>
                 </div>
 
                 <div className="flex flex-col border-b border-white/5 pb-4">
-                  <span className="text-xs font-semibold tracking-wider text-white/40 uppercase mb-1">Tracks</span>
-                  <span className="text-white/90 font-medium leading-relaxed">AI Agents &middot; LLMs &middot; Voice AI &middot; Creator-Tech</span>
+                  <span className="text-[11px] font-semibold tracking-widest text-white/40 uppercase mb-1.5">Tracks</span>
+                  <span className="text-white/80 leading-relaxed">AI Agents &middot; LLMs &middot; Voice AI &middot; Creator-Tech</span>
+                </div>
+
+                <div className="flex flex-col border-b border-white/5 pb-4">
+                  <span className="text-[11px] font-semibold tracking-widest text-white/40 uppercase mb-1.5">Prize Pool</span>
+                  <span className="text-[#fabd00] font-semibold tracking-wide">$2,000</span>
                 </div>
 
                 <div className="flex flex-col">
-                  <span className="text-xs font-semibold tracking-wider text-white/40 uppercase mb-1">Opportunity</span>
-                  <span className="text-[#fabd00] font-medium leading-relaxed">Selected finalists may be considered for paid internships.</span>
+                  <span className="text-[11px] font-semibold tracking-widest text-white/40 uppercase mb-1.5">Opportunity</span>
+                  <span className="text-white/90 leading-relaxed">Selected finalists may be considered for paid internships.</span>
                 </div>
               </div>
             </div>
 
-            <p className="mt-4 text-[13px] text-white/30 px-4 leading-relaxed max-w-[480px]">
+            <p className="mt-5 text-[12px] text-white/30 px-2 leading-relaxed max-w-[480px]">
               Note: Paid internship opportunities depend on performance, role fit, and interview.
             </p>
           </motion.div>
