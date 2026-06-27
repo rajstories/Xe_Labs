@@ -4,6 +4,31 @@ import { motion } from 'motion/react';
 import React from 'react';
 
 export function ContactSection() {
+  const [formData, setFormData] = React.useState({
+    name: '',
+    company: '',
+    email: '',
+    projectType: '',
+    budgetRange: '',
+    message: ''
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    const emailBody = `Name: ${formData.name}
+Company: ${formData.company}
+Email: ${formData.email}
+Project Type: ${formData.projectType}
+Budget Range: ${formData.budgetRange}
+
+Message:
+${formData.message}`;
+
+    const mailtoUrl = `mailto:info@xelabs.in?subject=${encodeURIComponent(`Enquiry from ${formData.name}`)}&body=${encodeURIComponent(emailBody)}`;
+    window.location.href = mailtoUrl;
+  };
+
   return (
     <section id="contact" className="w-full bg-black text-white py-32 md:py-48 px-6 md:px-12 border-t border-gray-900">
       <div className="max-w-[1600px] mx-auto grid lg:grid-cols-2 gap-24 items-start">
@@ -31,16 +56,21 @@ export function ContactSection() {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
           className="w-full max-w-2xl lg:mt-8 pt-8"
         >
-          <form className="flex flex-col gap-8" onSubmit={(e) => e.preventDefault()}>
+          <form className="flex flex-col gap-8" onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <input 
                 type="text" 
                 placeholder="NAME" 
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                required
                 className="border-b border-gray-800 bg-transparent outline-none py-4 w-full text-white placeholder-gray-600 focus:border-white transition-colors tracking-wide text-sm" 
               />
               <input 
                 type="text" 
                 placeholder="COMPANY" 
+                value={formData.company}
+                onChange={(e) => setFormData({ ...formData, company: e.target.value })}
                 className="border-b border-gray-800 bg-transparent outline-none py-4 w-full text-white placeholder-gray-600 focus:border-white transition-colors tracking-wide text-sm" 
               />
             </div>
@@ -49,11 +79,16 @@ export function ContactSection() {
               <input 
                 type="email" 
                 placeholder="EMAIL" 
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                required
                 className="border-b border-gray-800 bg-transparent outline-none py-4 w-full text-white placeholder-gray-600 focus:border-white transition-colors tracking-wide text-sm" 
               />
               <input 
                 type="text" 
                 placeholder="PROJECT TYPE" 
+                value={formData.projectType}
+                onChange={(e) => setFormData({ ...formData, projectType: e.target.value })}
                 className="border-b border-gray-800 bg-transparent outline-none py-4 w-full text-white placeholder-gray-600 focus:border-white transition-colors tracking-wide text-sm" 
               />
             </div>
@@ -61,12 +96,17 @@ export function ContactSection() {
             <input 
               type="text" 
               placeholder="BUDGET RANGE" 
+              value={formData.budgetRange}
+              onChange={(e) => setFormData({ ...formData, budgetRange: e.target.value })}
               className="border-b border-gray-800 bg-transparent outline-none py-4 w-full text-white placeholder-gray-600 focus:border-white transition-colors tracking-wide text-sm" 
             />
             
             <textarea 
               placeholder="MESSAGE" 
               rows={4} 
+              value={formData.message}
+              onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+              required
               className="border-b border-gray-800 bg-transparent outline-none py-4 w-full text-white placeholder-gray-600 focus:border-white transition-colors tracking-wide text-sm resize-none"
             ></textarea>
             
