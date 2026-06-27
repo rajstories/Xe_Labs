@@ -1,15 +1,10 @@
 import { HeroSection } from "@/components/hero-section";
-import { TrustSection } from "@/components/trust-section";
-import { AboutSection } from "@/components/about-section";
 import { CapabilitiesSection } from "@/components/capabilities-section";
 import { MethodologySection } from "@/components/methodology-section";
 import { PortfolioSection } from "@/components/portfolio-section";
-import { TeamSection } from "@/components/team-section";
 import { ContactSection } from "@/components/contact-section";
-import { HomeFaq } from "@/components/home-faq";
 import { JsonLd } from "@/components/json-ld";
-import { homeFaqs } from "@/lib/faqs";
-import { SITE_URL, createMetadata, faqSchema, webPageSchema } from "@/lib/seo";
+import { SITE_URL, createMetadata, webPageSchema } from "@/lib/seo";
 
 const title = "XE Labs | AI-Native Product Lab for Agents, LLMs & Automation";
 const description = "XE Labs is a newly launched AI-native product lab building AI agents, custom LLM systems, intelligent automation workflows, creator-tech tools, voice AI, video AI, and SaaS products.";
@@ -35,15 +30,11 @@ export default function HomePage() {
 
   return (
     <main className="min-h-screen bg-transparent">
-      <JsonLd data={[websiteSchema, webPageSchema({ path: '/', name: title, description, type: 'AboutPage' }), faqSchema(homeFaqs)]} />
+      <JsonLd data={[websiteSchema, webPageSchema({ path: '/', name: title, description, type: 'AboutPage' })]} />
       <HeroSection />
-      <TrustSection />
-      <AboutSection />
       <CapabilitiesSection />
       <MethodologySection />
       <PortfolioSection />
-      <TeamSection />
-      <HomeFaq />
       <ContactSection />
     </main>
   );

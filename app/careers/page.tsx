@@ -7,6 +7,7 @@ import { careersFaqs } from '@/lib/faqs';
 import { JsonLd } from '@/components/json-ld';
 import { SITE_URL, breadcrumbSchema, faqSchema, webPageSchema } from '@/lib/seo';
 import { buildSprintSchedule, buildSprintTimeline } from '@/lib/build-sprint';
+import { TrustSection } from '@/components/trust-section';
 import { 
   ChevronRight, 
   Terminal, 
@@ -165,6 +166,8 @@ export default function CareersPage() {
             </motion.div>
         </div>
       </section>
+
+      <TrustSection />
 
       {/* 1.5 Why Build Sprint 2026 Exists */}
       <section className="w-full max-w-7xl mx-auto px-6 mb-32">

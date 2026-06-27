@@ -3,7 +3,7 @@ import Link from 'next/link';
 export function Footer() {
   return (
     <footer className="w-full bg-black border-t border-gray-900 py-16 px-6 md:px-12">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-5 gap-8 mb-12">
         <div className="col-span-1 md:col-span-1">
           <svg viewBox="0 0 160 110" className="w-[60px] h-auto md:w-[70px] mb-6" fill="none" xmlns="http://www.w3.org/2000/svg">
             <defs>
@@ -56,6 +56,17 @@ export function Footer() {
             <li><Link href="/build-sprint/editdna" className="hover:text-white transition-colors">Explore EditDNA track</Link></li>
             <li><Link href="/build-sprint/voicecore" className="hover:text-white transition-colors">Explore VoiceCore track</Link></li>
             <li><Link href="/contact" className="hover:text-white transition-colors">Contact</Link></li>
+          </ul>
+        </div>
+
+        <div className="col-span-1">
+          <h4 className="text-white font-bold mb-4">FAQ</h4>
+          <ul className="space-y-3 text-sm text-white/60">
+            <li><Link href="/faq#what-is-xe-labs" className="hover:text-white transition-colors">What is XE Labs?</Link></li>
+            <li><Link href="/faq#what-does-xe-labs-build" className="hover:text-white transition-colors">What do we build?</Link></li>
+            <li><Link href="/faq#is-xe-labs-real" className="hover:text-white transition-colors">Is XE Labs a real company?</Link></li>
+            <li><Link href="/faq#build-sprint-2026" className="hover:text-white transition-colors">What is Build Sprint 2026?</Link></li>
+            <li><Link href="/faq" className="text-[#fabd00] hover:text-[#fabd00]/80 transition-colors">View All FAQs &rarr;</Link></li>
           </ul>
         </div>
 
