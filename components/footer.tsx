@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export function Footer() {
   return (
     <footer className="w-full bg-black border-t border-gray-900 py-12 px-6 md:px-12">
@@ -27,9 +29,14 @@ export function Footer() {
             </g>
           </svg>
         </div>
-        <p className="text-white text-xs tracking-widest uppercase">
-          &copy; {new Date().getFullYear()} XE Labs. All rights reserved.
-        </p>
+        <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-8">
+          <p className="text-white/60 text-xs tracking-widest uppercase">
+            &copy; {new Date().getFullYear()} XE Labs. All rights reserved.
+          </p>
+          <Link href="/privacy" className="text-white/40 hover:text-white text-xs tracking-widest uppercase transition-colors">
+            Privacy Policy
+          </Link>
+        </div>
       </div>
     </footer>
   );
