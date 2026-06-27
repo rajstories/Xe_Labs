@@ -99,71 +99,107 @@ export default function CareersPage() {
       ]} />
       
       {/* 1. Hero Section */}
-      <section className="relative w-full flex flex-col items-center justify-center overflow-hidden px-4 mb-32">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-white/[0.05] via-transparent to-transparent -z-10" />
+      <section className="relative w-full overflow-hidden px-6 pt-24 pb-20 md:pt-32 md:pb-32 mb-16 md:mb-24">
+        {/* Subtle background glow */}
+        <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[600px] h-[600px] bg-[#fabd00]/5 rounded-full blur-[120px] -z-10 pointer-events-none" />
         
-        <div className="w-full max-w-5xl mx-auto text-center z-10 flex flex-col items-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm text-sm font-medium text-white/80 mb-8">
-              <Sparkles className="w-4 h-4 text-[#fabd00]" />
-              XE Labs Build Sprint 2026
-            </div>
-            
-            <h1 className="font-bold tracking-tight leading-[1.1] [text-shadow:0_4px_24px_rgba(0,0,0,0.8)] text-4xl sm:text-5xl md:text-7xl">
-              <span className="block text-[#f9f9ff]">Build What The</span>
-              <span className="block text-[#fabd00]">Future Will Use.</span>
-            </h1>
-          </motion.div>
-
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.2 }}
-            className="mt-8 text-base md:text-lg text-[#e0e0e0] font-normal max-w-2xl mx-auto leading-relaxed [text-shadow:0_2px_10px_rgba(0,0,0,0.5)]"
-          >
-            Join XE Labs through product sprints, hackathons, and paid internships to build real AI tools, SaaS products, agents, and automation systems.
-          </motion.p>
+        <div className="w-full max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-12 lg:gap-8 z-10 relative">
           
-            <div className="mt-8 flex flex-wrap justify-center gap-3 max-w-3xl">
-              {[
-                "No registration fee",
-                "Online format",
-                "Solo or team up to 3",
-                "Secure application",
-                "Paid internship opportunity for selected finalists"
-              ].map((badge, i) => (
-                <div key={i} className="px-3 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm text-xs font-medium text-white/80">
-                  {badge}
-                </div>
-              ))}
-            </div>
+          {/* Left Column */}
+          <div className="flex-1 flex flex-col items-start text-left w-full">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#fabd00]/30 bg-[#fabd00]/10 text-xs font-bold text-[#fabd00] mb-6 tracking-widest uppercase">
+                <Sparkles className="w-3.5 h-3.5" />
+                XE Labs Build Sprint 2026
+              </div>
+              
+              <h1 className="font-bold tracking-tight leading-[1.1] text-4xl sm:text-5xl lg:text-[4rem] xl:text-[4.5rem] mb-6">
+                <span className="block text-white">Build What The</span>
+                <span className="block text-[#fabd00]">Future Will Use.</span>
+              </h1>
+            </motion.div>
 
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 0.3 }}
-              className="mt-6 text-sm text-[#fabd00] font-medium tracking-wide uppercase max-w-2xl mx-auto"
+              transition={{ duration: 1, delay: 0.2 }}
+              className="text-lg md:text-xl text-white/60 font-normal max-w-[600px] leading-[1.6] mb-10"
             >
-              Selected finalists may be offered paid internship opportunities based on performance, role fit, and interview.
+              Join a product-focused AI sprint to build real tools across agents, LLM systems, creator-tech, voice AI, and automation.
             </motion.p>
-
+            
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="mt-10 flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto mx-auto justify-center"
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full mb-6"
             >
-              <Link href="/careers/apply" className="w-full sm:w-auto px-8 py-4 rounded-lg bg-[#fabd00] hover:bg-[#fabd00]/90 text-black font-semibold transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
+              <Link href="/careers/apply" className="w-full sm:w-auto px-7 py-3.5 rounded-2xl bg-[#fabd00] hover:bg-[#fabd00]/90 text-black font-semibold transition-all duration-300 flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(250,189,0,0.2)]">
                 Apply for Build Sprint 2026 <ArrowRight className="w-4 h-4" />
               </Link>
-              <Link href="#tracks" className="w-full sm:w-auto px-8 py-4 rounded-lg border border-white/20 bg-white/5 hover:bg-white/10 text-white font-semibold transition-all duration-300 backdrop-blur-sm flex items-center justify-center">
+              <Link href="#tracks" className="w-full sm:w-auto px-7 py-3.5 rounded-2xl border border-white/10 bg-white/5 hover:border-[#fabd00]/50 text-white font-medium transition-all duration-300 flex items-center justify-center">
                 View Tracks
               </Link>
             </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 0.4 }}
+              className="text-sm font-medium text-white/40 flex items-center gap-2"
+            >
+              No registration fee &middot; Online format &middot; Solo or team up to 3
+            </motion.div>
+          </div>
+
+          {/* Right Column: Program Card */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="w-full lg:w-[480px] xl:w-[520px] flex-shrink-0"
+          >
+            <div className="relative w-full rounded-[24px] border border-white/10 bg-white/[0.04] p-8 shadow-[0_8px_32px_rgba(0,0,0,0.4)] backdrop-blur-xl overflow-hidden group">
+              <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-10 mix-blend-overlay pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-br from-white/[0.02] to-transparent pointer-events-none" />
+              
+              <h3 className="text-xl font-bold text-white mb-8 relative z-10 flex items-center gap-2">
+                <Terminal className="w-5 h-5 text-[#fabd00]" />
+                Program Snapshot
+              </h3>
+
+              <div className="space-y-6 relative z-10">
+                <div className="flex flex-col border-b border-white/5 pb-4">
+                  <span className="text-xs font-semibold tracking-wider text-white/40 uppercase mb-1">Format</span>
+                  <span className="text-white/90 font-medium">Online</span>
+                </div>
+                
+                <div className="flex flex-col border-b border-white/5 pb-4">
+                  <span className="text-xs font-semibold tracking-wider text-white/40 uppercase mb-1">Team Size</span>
+                  <span className="text-white/90 font-medium">Solo or up to 3</span>
+                </div>
+
+                <div className="flex flex-col border-b border-white/5 pb-4">
+                  <span className="text-xs font-semibold tracking-wider text-white/40 uppercase mb-1">Tracks</span>
+                  <span className="text-white/90 font-medium leading-relaxed">AI Agents &middot; LLMs &middot; Voice AI &middot; Creator-Tech</span>
+                </div>
+
+                <div className="flex flex-col">
+                  <span className="text-xs font-semibold tracking-wider text-white/40 uppercase mb-1">Opportunity</span>
+                  <span className="text-[#fabd00] font-medium leading-relaxed">Selected finalists may be considered for paid internships.</span>
+                </div>
+              </div>
+            </div>
+
+            <p className="mt-4 text-[13px] text-white/30 px-4 leading-relaxed max-w-[480px]">
+              Note: Paid internship opportunities depend on performance, role fit, and interview.
+            </p>
+          </motion.div>
+          
         </div>
       </section>
 
